@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller 2 — Modelos y Simulación</title>
+<style>
+:root {
+  --bg: #0f0f1a;
+  --slide-bg: #1a1a2e;
+  --accent1: #4fc3f7;
+  --accent2: #81c784;
+  --accent3: #ffb74d;
+  --danger: #ef5350;
+  --text: #e0e0e0;
+  --text-muted: #9e9e9e;
+  --card-bg: #16213e;
+  --table-header: #0d1b2a;
+  --border: #2a2a4a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+#presentation {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--slide-bg);
+  display: none;
+  flex-direction: column;
+  padding: 48px 60px 80px;
+  overflow-y: auto;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.slide.active {
+  display: flex;
+  opacity: 1;
+}
+/* NAV */
+#nav-counter {
+  position: fixed;
+  top: 16px; right: 80px;
+  background: rgba(0,0,0,0.5);
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  z-index: 100;
+  font-variant-numeric: tabular-nums;
+}
+.nav-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(79,195,247,0.15);
+  border: 1px solid var(--accent1);
+  color: var(--accent1);
+  font-size: 22px;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.nav-btn:hover { background: rgba(79,195,247,0.3); }
+#btn-prev { left: 12px; }
+#btn-next { right: 12px; }
+/* TYPOGRAPHY */
+.slide-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent1);
+  margin-bottom: 8px;
+  border-bottom: 2px solid var(--accent1);
+  padding-bottom: 10px;
+}
+.slide-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+/* COVER */
+.cover-slide {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 40%, #0a2a4a 100%);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+}
+.cover-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent1);
+  line-height: 1.15;
+  text-shadow: 0 0 40px rgba(79,195,247,0.4);
+}
+.cover-subtitle {
+  font-size: 1.3rem;
+  color: var(--accent3);
+  font-weight: 500;
+}
+.cover-inst {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+.cover-authors {
+  font-size: 1.15rem;
+  color: var(--accent2);
+  font-weight: 600;
+  margin-top: 12px;
+}
+.cover-date {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+.cover-divider {
+  width: 120px; height: 3px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  border-radius: 2px;
+  margin: 8px auto;
+}
+/* AGENDA */
+.agenda-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+.agenda-list li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--card-bg);
+  border-left: 4px solid var(--accent1);
+  padding: 14px 20px;
+  border-radius: 0 8px 8px 0;
+  font-size: 1.05rem;
+}
+.agenda-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent1);
+  min-width: 32px;
+}
+/* CARDS GRID */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 16px;
+}
+.card {
+  background: var(--card-bg);
+  border-left: 4px solid var(--accent1);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 20px;
+}
+.card.green { border-left-color: var(--accent2); }
+.card.orange { border-left-color: var(--accent3); }
+.card.red { border-left-color: var(--danger); }
+.card-icon { font-size: 1.8rem; margin-bottom: 8px; }
+.card-title { font-size: 1rem; font-weight: 700; color: var(--accent1); margin-bottom: 4px; }
+.card.green .card-title { color: var(--accent2); }
+.card.orange .card-title { color: var(--accent3); }
+.card.red .card-title { color: var(--danger); }
+.card-desc { font-size: 0.9rem; color: var(--text-muted); }
+/* FLOW */
+.flow-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+}
+.flow-step {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 110px;
+}
+.flow-arrow {
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+/* TWO COLUMNS */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 16px;
+}
+.col-box {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid var(--border);
+}
+.col-box-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent1);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+/* TABLES */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-top: 12px;
+}
+th {
+  background: var(--table-header);
+  color: var(--accent1);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--accent1);
+}
+td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+tr:hover td { background: rgba(79,195,247,0.04); }
+.td-green { color: var(--accent2); font-weight: 600; }
+.td-red { color: var(--danger); font-weight: 600; }
+.td-orange { color: var(--accent3); font-weight: 600; }
+.td-star { color: var(--accent3); }
+tr.best-row td { background: rgba(129,199,132,0.08); }
+tr.best-row td:first-child { border-left: 3px solid var(--accent2); }
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: linear-gradient(135deg, rgba(79,195,247,0.1), rgba(129,199,132,0.1));
+  border: 1px solid var(--accent1);
+  border-radius: 10px;
+  padding: 16px 22px;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent1);
+}
+.highlight-box.danger {
+  background: rgba(239,83,80,0.1);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.highlight-box.green {
+  background: rgba(129,199,132,0.1);
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+/* RISK CARDS */
+.risk-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+.risk-card {
+  border-radius: 10px;
+  padding: 18px;
+  border: 1px solid;
+}
+.risk-card.high { background: rgba(239,83,80,0.1); border-color: var(--danger); }
+.risk-card.low { background: rgba(129,199,132,0.1); border-color: var(--accent2); }
+.risk-card.mid { background: rgba(255,183,77,0.1); border-color: var(--accent3); }
+.risk-card-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.risk-card.high .risk-card-label { color: var(--danger); }
+.risk-card.low .risk-card-label { color: var(--accent2); }
+.risk-card.mid .risk-card-label { color: var(--accent3); }
+.risk-card-value { font-size: 1.6rem; font-weight: 800; margin: 8px 0; }
+.risk-card.high .risk-card-value { color: var(--danger); }
+.risk-card.low .risk-card-value { color: var(--accent2); }
+.risk-card.mid .risk-card-value { color: var(--accent3); }
+.risk-card-params { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+/* IMPORTANCE BARS */
+.importance-list { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.importance-item { display: flex; flex-direction: column; gap: 4px; }
+.importance-label { font-size: 0.85rem; display: flex; justify-content: space-between; }
+.importance-bar-bg { background: var(--border); border-radius: 4px; height: 10px; overflow: hidden; }
+.importance-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent1), var(--accent2)); }
+/* RULES TABLE */
+.rules-table td.rule-high { background: rgba(239,83,80,0.12); color: var(--danger); font-weight: 600; }
+.rules-table td.rule-mid { background: rgba(255,183,77,0.12); color: var(--accent3); font-weight: 600; }
+.rules-table td.rule-low { background: rgba(129,199,132,0.12); color: var(--accent2); font-weight: 600; }
+/* CONCLUSIONS */
+.conclusions-list { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.conclusion-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent2);
+}
+.conclusion-num { font-size: 1.3rem; min-width: 28px; }
+.conclusion-text { font-size: 0.95rem; line-height: 1.5; }
+/* CLOSING */
+.closing-slide {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a1a2e 50%, #0a2a4a 100%);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+}
+.closing-title { font-size: 3.5rem; font-weight: 800; color: var(--accent2); text-shadow: 0 0 40px rgba(129,199,132,0.4); }
+.closing-quote {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  max-width: 600px;
+  border-left: 3px solid var(--accent1);
+  padding-left: 16px;
+  text-align: left;
+  margin-top: 8px;
+}
+/* FOOTNOTE */
+.footnote {
+  margin-top: auto;
+  padding-top: 12px;
+  font-size: 0.82rem;
+  color: var(--accent3);
+  font-style: italic;
+  border-top: 1px solid var(--border);
+}
+/* STATS TABLE */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+.stat-box {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-label { font-size: 0.8rem; color: var(--text-muted); }
+.stat-value { font-size: 1.4rem; font-weight: 700; color: var(--accent1); }
+/* COMPARISON TABLE */
+.comp-table th:first-child { min-width: 160px; }
+.comp-table td:first-child { font-weight: 600; color: var(--accent1); }
+/* VARIABLES LIST */
+.var-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.var-item {
+  background: rgba(79,195,247,0.06);
+  border-left: 3px solid var(--accent1);
+  padding: 8px 14px;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.88rem;
+}
+.var-name { font-weight: 700; color: var(--accent1); }
+.var-labels { color: var(--text-muted); font-size: 0.82rem; }
+/* BADGE */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.badge-green { background: rgba(129,199,132,0.2); color: var(--accent2); }
+.badge-blue { background: rgba(79,195,247,0.2); color: var(--accent1); }
+</style>
+</head>
+<body>
+<div id="presentation">
+
+<!-- SLIDE 1: PORTADA -->
+<div class="slide cover-slide active" id="slide-1">
+  <div class="cover-title">Taller 2 — Modelos y Simulación</div>
+  <div class="cover-divider"></div>
+  <div class="cover-subtitle">Método Delphi · Sistema Difuso · Montecarlo · Regresión</div>
+  <div class="cover-inst">Institución Universitaria Pascual Bravo — Medellín, Colombia</div>
+  <div class="cover-authors">Julian Zapata · Juan José Orrego</div>
+  <div class="cover-date">Abril 2026</div>
+</div>
+
+<!-- SLIDE 2: AGENDA -->
+<div class="slide" id="slide-2">
+  <div class="slide-title">Contenido</div>
+  <ul class="agenda-list">
+    <li><span class="agenda-num">1</span>🎯 Objetivo del taller</li>
+    <li><span class="agenda-num">2</span>🔄 Flujo metodológico</li>
+    <li><span class="agenda-num">3</span>📚 Caso Base: Riesgo Académico (Partes A–D)</li>
+    <li><span class="agenda-num">4</span>📡 Proyecto Final: Plataforma de Streaming (Parte E)</li>
+    <li><span class="agenda-num">5</span>⚖️ Comparación de resultados</li>
+    <li><span class="agenda-num">6</span>✅ Conclusiones</li>
+  </ul>
+</div>
+
+<!-- SLIDE 3: OBJETIVO -->
+<div class="slide" id="slide-3">
+  <div class="slide-title">Objetivo del Taller</div>
+  <div class="slide-subtitle">Diseñar, implementar y analizar un modelo de evaluación de riesgo mediante:</div>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">Método Delphi</div>
+      <div class="card-desc">Consenso experto estructurado en 3 rondas para validar variables del modelo</div>
+    </div>
+    <div class="card green">
+      <div class="card-icon">🔷</div>
+      <div class="card-title">Sistema Difuso Mamdani</div>
+      <div class="card-desc">Inferencia basada en reglas IF-THEN con lógica difusa para modelar incertidumbre</div>
+    </div>
+    <div class="card orange">
+      <div class="card-icon">🎲</div>
+      <div class="card-title">Simulación Montecarlo</div>
+      <div class="card-desc">Generación de escenarios probabilísticos para explorar el espacio de riesgo</div>
+    </div>
+    <div class="card red">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Regresión</div>
+      <div class="card-desc">Predicción y contraste estadístico del índice de riesgo generado por el sistema difuso</div>
+    </div>
+  </div>
+  <div class="footnote">⚠️ Principio central: NADA se inventa. Todo sale del Delphi.</div>
+</div>
+
+<!-- SLIDE 4: FLUJO METODOLÓGICO -->
+<div class="slide" id="slide-4">
+  <div class="slide-title">Flujo Metodológico Obligatorio</div>
+  <div class="flow-container">
+    <div class="flow-step" style="background:rgba(79,195,247,0.15);border:1px solid #4fc3f7;color:#4fc3f7;">🔍 Delphi</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(129,199,132,0.15);border:1px solid #81c784;color:#81c784;">Factores priorizados</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(255,183,77,0.15);border:1px solid #ffb74d;color:#ffb74d;">Variables difusas</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(206,147,216,0.15);border:1px solid #ce93d8;color:#ce93d8;">Etiquetas y rangos</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(239,83,80,0.15);border:1px solid #ef5350;color:#ef5350;">Reglas difusas</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(79,195,247,0.15);border:1px solid #4fc3f7;color:#4fc3f7;">🎲 Montecarlo</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(129,199,132,0.15);border:1px solid #81c784;color:#81c784;">Base simulada</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(255,183,77,0.15);border:1px solid #ffb74d;color:#ffb74d;">📊 Regresión</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="background:rgba(239,83,80,0.15);border:1px solid #ef5350;color:#ef5350;">Análisis comparativo</div>
+  </div>
+  <div style="margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+    <div style="background:rgba(79,195,247,0.08);border:1px solid #4fc3f7;border-radius:8px;padding:14px;text-align:center;">
+      <div style="color:#4fc3f7;font-weight:700;font-size:0.9rem;">ETAPA 1</div>
+      <div style="font-size:0.82rem;color:#9e9e9e;margin-top:6px;">Validación experta de variables mediante consenso iterativo</div>
+    </div>
+    <div style="background:rgba(129,199,132,0.08);border:1px solid #81c784;border-radius:8px;padding:14px;text-align:center;">
+      <div style="color:#81c784;font-weight:700;font-size:0.9rem;">ETAPA 2</div>
+      <div style="font-size:0.82rem;color:#9e9e9e;margin-top:6px;">Construcción del sistema de inferencia difusa Mamdani</div>
+    </div>
+    <div style="background:rgba(255,183,77,0.08);border:1px solid #ffb74d;border-radius:8px;padding:14px;text-align:center;">
+      <div style="color:#ffb74d;font-weight:700;font-size:0.9rem;">ETAPA 3</div>
+      <div style="font-size:0.82rem;color:#9e9e9e;margin-top:6px;">Simulación estocástica de escenarios con distribuciones reales</div>
+    </div>
+    <div style="background:rgba(239,83,80,0.08);border:1px solid #ef5350;border-radius:8px;padding:14px;text-align:center;">
+      <div style="color:#ef5350;font-weight:700;font-size:0.9rem;">ETAPA 4</div>
+      <div style="font-size:0.82rem;color:#9e9e9e;margin-top:6px;">Contraste estadístico y análisis de importancia de variables</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: DOS CASOS -->
+<div class="slide" id="slide-5">
+  <div class="slide-title">Dos Aplicaciones de la Metodología</div>
+  <div class="two-col" style="margin-top:24px;gap:30px;">
+    <div class="col-box" style="border-color:#4fc3f7;border-width:2px;">
+      <div style="font-size:0.8rem;font-weight:700;color:#4fc3f7;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">CASO BASE — Partes A–D</div>
+      <div style="font-size:1.3rem;font-weight:700;color:#e0e0e0;margin-bottom:12px;">Riesgo de Bajo Rendimiento Académico</div>
+      <div style="font-size:0.9rem;color:#9e9e9e;margin-bottom:16px;">Institución Universitaria Pascual Bravo</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:0.88rem;color:#e0e0e0;">📌 Variables: promedio, inasistencia, horas de estudio, motivación</li>
+        <li style="font-size:0.88rem;color:#e0e0e0;">👥 Panel: 4 expertos institucionales</li>
+        <li style="font-size:0.88rem;color:#e0e0e0;">🎲 1000 simulaciones Montecarlo</li>
+        <li style="font-size:0.88rem;color:#e0e0e0;">📊 Random Forest R² = 0.840</li>
+      </ul>
+    </div>
+    <div class="col-box" style="border-color:#81c784;border-width:2px;">
+      <div style="font-size:0.8rem;font-weight:700;color:#81c784;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">PROYECTO FINAL — Parte E</div>
+      <div style="font-size:1.3rem;font-weight:700;color:#e0e0e0;margin-bottom:12px;">Riesgo QoS — Plataforma de Streaming</div>
+      <div style="font-size:0.9rem;color:#9e9e9e;margin-bottom:16px;">Similar a Netflix / YouTube / Twitch</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:0.88rem;color:#e0e0e0;">📌 Variables: usuarios, ancho de banda, latencia, capacidad</li>
+        <li style="font-size:0.88rem;color:#e0e0e0;">👥 Panel: 4 expertos del sector tecnológico</li>
+        <li style="font-size:0.88rem;color:#e0e0e0;">🎲 5000 simulaciones Montecarlo</li>
+        <li style="font-size:0.88rem;color:#e0e0e0;">📊 Random Forest R² = 0.966</li>
+      </ul>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:24px;">
+    Misma metodología · Dos dominios distintos · Trazabilidad completa en ambos casos
+  </div>
+</div>
+
+<!-- SLIDE 6: DELPHI PANEL CASO BASE -->
+<div class="slide" id="slide-6">
+  <div class="slide-title">Parte A — Método Delphi: Caso Base</div>
+  <div class="slide-subtitle">Panel de Expertos — I.U. Pascual Bravo</div>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Nombre</th><th>Cargo</th><th>Dependencia</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="color:#4fc3f7;font-weight:700;">E1</td><td>Dr. Carlos Restrepo</td><td>Docente de Ingeniería de Sistemas</td><td>Facultad de Ingeniería</td></tr>
+      <tr><td style="color:#4fc3f7;font-weight:700;">E2</td><td>Mg. Adriana Gómez</td><td>Coordinadora Académica</td><td>Vicerrectoría Académica</td></tr>
+      <tr><td style="color:#4fc3f7;font-weight:700;">E3</td><td>Ps. Juliana Martínez</td><td>Psicóloga de Bienestar Estudiantil</td><td>Bienestar Universitario</td></tr>
+      <tr><td style="color:#4fc3f7;font-weight:700;">E4</td><td>Dr. Hernán Ospina</td><td>Director de Currículo</td><td>Vicerrectoría Académica</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:24px;">
+    <div style="font-size:0.9rem;font-weight:700;color:#ffb74d;margin-bottom:12px;">Criterios de Consenso</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div style="background:rgba(79,195,247,0.08);border:1px solid #4fc3f7;border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:1.4rem;font-weight:800;color:#4fc3f7;">≥ 4.0</div>
+        <div style="font-size:0.82rem;color:#9e9e9e;margin-top:4px;">Media grupal (escala Likert 1–5)</div>
+      </div>
+      <div style="background:rgba(129,199,132,0.08);border:1px solid #81c784;border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:1.4rem;font-weight:800;color:#81c784;">≤ 0.30</div>
+        <div style="font-size:0.82rem;color:#9e9e9e;margin-top:4px;">Coeficiente de variación (CV)</div>
+      </div>
+      <div style="background:rgba(255,183,77,0.08);border:1px solid #ffb74d;border-radius:8px;padding:14px;text-align:center;">
+        <div style="font-size:1.4rem;font-weight:800;color:#ffb74d;">≥ 70%</div>
+        <div style="font-size:0.82rem;color:#9e9e9e;margin-top:4px;">Porcentaje de aprobación (puntuación ≥ 4)</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:16px;background:rgba(79,195,247,0.06);border-radius:8px;padding:14px;font-size:0.88rem;color:#9e9e9e;">
+    <strong style="color:#4fc3f7;">Metodología:</strong> 3 rondas iterativas · Escala Likert 1–5 · Retroalimentación anónima entre rondas · Convergencia hacia consenso
+  </div>
+</div>
+
+<!-- SLIDE 7: DELPHI RESULTADOS CASO BASE -->
+<div class="slide" id="slide-7">
+  <div class="slide-title">Resultados Delphi — Caso Base</div>
+  <table>
+    <thead>
+      <tr><th>Factor</th><th>R1 Media</th><th>R2 Media</th><th>R3 Media</th><th>CV Final</th><th>Resultado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code style="color:#4fc3f7;">promedio_academico</code></td>
+        <td>4.25</td><td>4.75</td><td>4.75</td>
+        <td class="td-green">0.091</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+      <tr>
+        <td><code style="color:#4fc3f7;">inasistencia</code></td>
+        <td>4.50</td><td>4.25</td><td>4.25</td>
+        <td class="td-green">0.102</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+      <tr>
+        <td><code style="color:#4fc3f7;">horas_estudio</code></td>
+        <td>4.25</td><td>4.25</td><td>4.25</td>
+        <td class="td-green">0.102</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+      <tr>
+        <td><code style="color:#4fc3f7;">motivacion_estres</code></td>
+        <td>4.50</td><td>4.50</td><td>4.25</td>
+        <td class="td-green">0.102</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box green" style="margin-top:20px;font-size:1.2rem;">
+    4 / 4 variables aprobadas · 100% consenso · Todas las medias ≥ 4.0 · Todos los CV ≤ 0.30
+  </div>
+  <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <div style="background:var(--card-bg);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:0.78rem;color:#9e9e9e;">Rondas realizadas</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#4fc3f7;">3</div>
+    </div>
+    <div style="background:var(--card-bg);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:0.78rem;color:#9e9e9e;">Variables validadas</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#81c784;">4 / 4</div>
+    </div>
+    <div style="background:var(--card-bg);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:0.78rem;color:#9e9e9e;">CV máximo</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#ffb74d;">0.102</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: SISTEMA DIFUSO CASO BASE -->
+<div class="slide" id="slide-8">
+  <div class="slide-title">Parte B — Sistema Difuso Mamdani: Caso Base</div>
+  <div class="two-col">
+    <div class="col-box">
+      <div class="col-box-title">Variables de Entrada</div>
+      <ul class="var-list">
+        <li class="var-item">
+          <div class="var-name">promedio_academico <span style="color:#9e9e9e;font-weight:400;">[0 – 5]</span></div>
+          <div class="var-labels">bajo · medio · alto</div>
+        </li>
+        <li class="var-item">
+          <div class="var-name">inasistencia <span style="color:#9e9e9e;font-weight:400;">[0 – 100%]</span></div>
+          <div class="var-labels">baja · media · alta</div>
+        </li>
+        <li class="var-item">
+          <div class="var-name">horas_estudio <span style="color:#9e9e9e;font-weight:400;">[0 – 30 h]</span></div>
+          <div class="var-labels">pocas · moderadas · muchas</div>
+        </li>
+        <li class="var-item">
+          <div class="var-name">motivacion_estres <span style="color:#9e9e9e;font-weight:400;">[0 – 10]</span></div>
+          <div class="var-labels">bajo · medio · alto</div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-box">
+      <div class="col-box-title">Variable de Salida</div>
+      <div class="var-item" style="background:rgba(79,195,247,0.06);border-left:3px solid #4fc3f7;padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:12px;">
+        <div class="var-name">riesgo <span style="color:#9e9e9e;font-weight:400;">[0 – 100]</span></div>
+        <div class="var-labels">bajo · medio · alto</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+        <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border:1px solid var(--border);">
+          <div style="font-size:0.78rem;color:#9e9e9e;">Método de defuzzificación</div>
+          <div style="font-size:1rem;font-weight:700;color:#ffb74d;">Centroide (COG)</div>
+        </div>
+        <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border:1px solid var(--border);">
+          <div style="font-size:0.78rem;color:#9e9e9e;">Total de reglas IF-THEN</div>
+          <div style="font-size:1rem;font-weight:700;color:#4fc3f7;">12 reglas Mamdani</div>
+        </div>
+        <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border:1px solid var(--border);">
+          <div style="font-size:0.78rem;color:#9e9e9e;">Funciones de membresía</div>
+          <div style="font-size:1rem;font-weight:700;color:#81c784;">Triangulares y trapezoidales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: REGLAS DIFUSAS CASO BASE -->
+<div class="slide" id="slide-9">
+  <div class="slide-title">12 Reglas Mamdani — Caso Base</div>
+  <table class="rules-table">
+    <thead>
+      <tr><th>#</th><th>Condición (SI)</th><th>Consecuente (ENTONCES)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>R01</td><td>promedio = <strong>bajo</strong> Y inasistencia = <strong>alta</strong></td><td class="rule-high">riesgo = ALTO</td></tr>
+      <tr><td>R02</td><td>motivacion = <strong>bajo</strong> Y horas = <strong>pocas</strong></td><td class="rule-high">riesgo = ALTO</td></tr>
+      <tr><td>R03</td><td>promedio = <strong>bajo</strong> Y horas = <strong>pocas</strong></td><td class="rule-high">riesgo = ALTO</td></tr>
+      <tr><td>R04</td><td>promedio = <strong>alto</strong> Y inasistencia = <strong>baja</strong></td><td class="rule-low">riesgo = BAJO</td></tr>
+      <tr><td>R05</td><td>promedio = <strong>alto</strong> Y horas = <strong>muchas</strong></td><td class="rule-low">riesgo = BAJO</td></tr>
+      <tr><td>R06</td><td>motivacion = <strong>alto</strong> Y promedio = <strong>alto</strong></td><td class="rule-low">riesgo = BAJO</td></tr>
+      <tr><td>R07</td><td>promedio = <strong>medio</strong> Y inasistencia = <strong>media</strong></td><td class="rule-mid">riesgo = MEDIO</td></tr>
+      <tr><td>R08</td><td>horas = <strong>moderadas</strong> Y motivacion = <strong>medio</strong></td><td class="rule-mid">riesgo = MEDIO</td></tr>
+      <tr><td>R09</td><td>promedio = <strong>bajo</strong> Y inasistencia = <strong>media</strong></td><td class="rule-mid">riesgo = MEDIO</td></tr>
+      <tr><td>R10</td><td>inasistencia = <strong>alta</strong> Y horas = <strong>pocas</strong></td><td class="rule-high">riesgo = ALTO</td></tr>
+      <tr><td>R11</td><td>promedio = <strong>medio</strong> Y horas = <strong>pocas</strong></td><td class="rule-mid">riesgo = MEDIO</td></tr>
+      <tr><td>R12</td><td>motivacion = <strong>bajo</strong> Y inasistencia = <strong>alta</strong></td><td class="rule-high">riesgo = ALTO</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:14px;display:flex;gap:16px;font-size:0.82rem;">
+    <span style="background:rgba(239,83,80,0.15);color:#ef5350;padding:4px 12px;border-radius:12px;font-weight:700;">🔴 ALTO (5 reglas)</span>
+    <span style="background:rgba(255,183,77,0.15);color:#ffb74d;padding:4px 12px;border-radius:12px;font-weight:700;">🟡 MEDIO (4 reglas)</span>
+    <span style="background:rgba(129,199,132,0.15);color:#81c784;padding:4px 12px;border-radius:12px;font-weight:700;">🟢 BAJO (3 reglas)</span>
+  </div>
+</div>
+
+<!-- SLIDE 10: PRUEBA SISTEMA DIFUSO CASO BASE -->
+<div class="slide" id="slide-10">
+  <div class="slide-title">Prueba del Sistema Difuso — Caso Base</div>
+  <div class="risk-cards">
+    <div class="risk-card high">
+      <div class="risk-card-label">🔴 Alto Riesgo</div>
+      <div class="risk-card-value">84.44</div>
+      <div class="risk-card-params">
+        promedio = 2.0<br>
+        inasistencia = 65%<br>
+        horas_estudio = 4 h<br>
+        motivacion = 2
+      </div>
+    </div>
+    <div class="risk-card low">
+      <div class="risk-card-label">🟢 Bajo Riesgo</div>
+      <div class="risk-card-value">15.56</div>
+      <div class="risk-card-params">
+        promedio = 4.5<br>
+        inasistencia = 5%<br>
+        horas_estudio = 25 h<br>
+        motivacion = 8
+      </div>
+    </div>
+    <div class="risk-card mid">
+      <div class="risk-card-label">🟡 Riesgo Medio</div>
+      <div class="risk-card-value">50.00</div>
+      <div class="risk-card-params">
+        promedio = 3.5<br>
+        inasistencia = 35%<br>
+        horas_estudio = 12 h<br>
+        motivacion = 5
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box green" style="margin-top:20px;">
+    ✅ El sistema responde coherentemente al conocimiento experto
+  </div>
+  <div style="margin-top:14px;background:var(--card-bg);border-radius:8px;padding:14px;font-size:0.88rem;color:#9e9e9e;border:1px solid var(--border);">
+    <strong style="color:#4fc3f7;">Defuzzificación:</strong> Método del centroide (COG) · Los valores de salida son consistentes con las reglas Mamdani definidas a partir del consenso Delphi
+  </div>
+</div>
+
+<!-- SLIDE 11: MONTECARLO CASO BASE -->
+<div class="slide" id="slide-11">
+  <div class="slide-title">Parte C — Simulación Montecarlo: Caso Base</div>
+  <div class="slide-subtitle">1 000 simulaciones · RANDOM_SEED = 42</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;">
+    <div>
+      <table>
+        <thead><tr><th>Estadístico</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Media</td><td style="color:#4fc3f7;font-weight:700;">51.38</td></tr>
+          <tr><td>Mediana (P50)</td><td>50.00</td></tr>
+          <tr><td>Desv. estándar</td><td>13.12</td></tr>
+          <tr><td>Percentil 95 (P95)</td><td style="color:#ffb74d;font-weight:700;">72.21</td></tr>
+          <tr><td>Máximo</td><td>84.36</td></tr>
+          <tr><td><strong>P(riesgo ≥ 70)</strong></td><td style="color:#ef5350;font-weight:700;">7.1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:4px;">Distribuciones utilizadas</div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #4fc3f7;font-size:0.85rem;">
+        <strong style="color:#4fc3f7;">promedio_academico</strong><br>
+        <span style="color:#9e9e9e;">Normal Truncada (μ=3.5, σ=0.7) → [0, 5]</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #81c784;font-size:0.85rem;">
+        <strong style="color:#81c784;">inasistencia</strong><br>
+        <span style="color:#9e9e9e;">Beta (α=2, β=5) × 100 → asimetría positiva</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #ffb74d;font-size:0.85rem;">
+        <strong style="color:#ffb74d;">horas_estudio</strong><br>
+        <span style="color:#9e9e9e;">Triangular (min=0, moda=12, max=30)</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #ce93d8;font-size:0.85rem;">
+        <strong style="color:#ce93d8;">motivacion_estres</strong><br>
+        <span style="color:#9e9e9e;">Triangular (min=0, moda=5, max=10)</span>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box danger" style="margin-top:16px;font-size:1.05rem;">
+    ⚠️ 71 de 1 000 escenarios son críticos (riesgo ≥ 70)
+  </div>
+</div>
+
+<!-- SLIDE 12: REGRESIÓN CASO BASE -->
+<div class="slide" id="slide-12">
+  <div class="slide-title">Parte D — Regresión: Caso Base</div>
+  <table>
+    <thead>
+      <tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>R²</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>KNN (k=5)</td><td>7.51</td><td>10.99</td><td>0.310</td></tr>
+      <tr><td>Decision Tree</td><td>2.93</td><td>6.40</td><td>0.766</td></tr>
+      <tr class="best-row"><td><strong>Random Forest</strong> <span class="td-star">⭐</span></td><td class="td-green"><strong>2.42</strong></td><td class="td-green"><strong>5.29</strong></td><td class="td-green"><strong>0.840</strong></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div>
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:10px;">Correlación de Pearson</div>
+      <div style="background:var(--card-bg);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:2rem;font-weight:800;color:#81c784;">r = 0.9186</div>
+        <div style="font-size:0.82rem;color:#9e9e9e;margin-top:4px;">Correlación muy alta entre Random Forest y sistema difuso</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:10px;">Importancia de Variables (Random Forest)</div>
+      <div class="importance-list">
+        <div class="importance-item">
+          <div class="importance-label"><span style="color:#4fc3f7;">promedio_academico</span><span>45.89%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:45.89%"></div></div>
+        </div>
+        <div class="importance-item">
+          <div class="importance-label"><span>horas_estudio</span><span>24.57%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:24.57%;background:linear-gradient(90deg,#81c784,#4fc3f7)"></div></div>
+        </div>
+        <div class="importance-item">
+          <div class="importance-label"><span>motivacion_estres</span><span>15.85%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:15.85%;background:linear-gradient(90deg,#ffb74d,#81c784)"></div></div>
+        </div>
+        <div class="importance-item">
+          <div class="importance-label"><span>inasistencia</span><span>13.68%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:13.68%;background:linear-gradient(90deg,#ef5350,#ffb74d)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13: DELPHI PANEL STREAMING -->
+<div class="slide" id="slide-13">
+  <div class="slide-title">Parte E — Delphi: Plataforma de Streaming</div>
+  <div class="slide-subtitle">Panel de Expertos — Sector Tecnológico</div>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Nombre</th><th>Cargo</th><th>Área</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="color:#81c784;font-weight:700;">E1</td><td>Ing. Santiago Vargas</td><td>Arquitecto de Infraestructura Cloud</td><td>Plataformas Digitales</td></tr>
+      <tr><td style="color:#81c784;font-weight:700;">E2</td><td>Mg. Valentina Torres</td><td>Analista de QoS y Redes</td><td>Operaciones de Red</td></tr>
+      <tr><td style="color:#81c784;font-weight:700;">E3</td><td>Dr. Felipe Morales</td><td>Investigador en Sistemas Distribuidos</td><td>Departamento de I+D</td></tr>
+      <tr><td style="color:#81c784;font-weight:700;">E4</td><td>Ing. Camila Ríos</td><td>Especialista en Experiencia de Usuario (UX)</td><td>Área de Producto</td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+    <div style="background:var(--card-bg);border-left:3px solid #81c784;border-radius:0 8px 8px 0;padding:14px 18px;">
+      <div style="font-size:0.78rem;color:#9e9e9e;margin-bottom:6px;">💬 E1 — Ing. Santiago Vargas</div>
+      <div style="font-size:0.88rem;font-style:italic;color:#e0e0e0;">"Los usuarios concurrentes y el ancho de banda son los factores más críticos para la degradación del servicio en plataformas de streaming a escala."</div>
+    </div>
+    <div style="background:var(--card-bg);border-left:3px solid #4fc3f7;border-radius:0 8px 8px 0;padding:14px 18px;">
+      <div style="font-size:0.78rem;color:#9e9e9e;margin-bottom:6px;">�� E2 — Mg. Valentina Torres</div>
+      <div style="font-size:0.88rem;font-style:italic;color:#e0e0e0;">"La latencia de red es un indicador directo de la calidad percibida por el usuario; superar los 6ms genera abandono de sesión en tiempo real."</div>
+    </div>
+  </div>
+  <div style="margin-top:14px;background:rgba(129,199,132,0.06);border-radius:8px;padding:12px;font-size:0.85rem;color:#9e9e9e;border:1px solid rgba(129,199,132,0.2);">
+    <strong style="color:#81c784;">Mismos criterios de consenso:</strong> Media ≥ 4.0 · CV ≤ 0.30 · Aprobación ≥ 70%
+  </div>
+</div>
+
+<!-- SLIDE 14: DELPHI RESULTADOS STREAMING -->
+<div class="slide" id="slide-14">
+  <div class="slide-title">Resultados Delphi — Streaming</div>
+  <table>
+    <thead>
+      <tr><th>Factor</th><th>R1 Media</th><th>R2 Media</th><th>R3 Media</th><th>CV Final</th><th>Resultado</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code style="color:#81c784;">usuarios_concurrentes</code></td>
+        <td>4.25</td><td>4.75</td><td>4.75</td>
+        <td class="td-green">0.091</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+      <tr>
+        <td><code style="color:#81c784;">uso_ancho_banda</code></td>
+        <td>4.50</td><td>4.25</td><td>4.25</td>
+        <td class="td-green">0.102</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+      <tr>
+        <td><code style="color:#81c784;">latencia_red</code></td>
+        <td>4.25</td><td>4.25</td><td>4.25</td>
+        <td class="td-green">0.102</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+      <tr>
+        <td><code style="color:#81c784;">capacidad_servidor</code></td>
+        <td>4.50</td><td>4.50</td><td>4.25</td>
+        <td class="td-green">0.102</td>
+        <td class="td-green">✅ Aprobado</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box green" style="margin-top:20px;font-size:1.2rem;">
+    4 / 4 variables aprobadas · 100% consenso · Estructura idéntica al caso base
+  </div>
+  <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <div style="background:var(--card-bg);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:0.78rem;color:#9e9e9e;">Rondas realizadas</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#81c784;">3</div>
+    </div>
+    <div style="background:var(--card-bg);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:0.78rem;color:#9e9e9e;">Variables validadas</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#81c784;">4 / 4</div>
+    </div>
+    <div style="background:var(--card-bg);border-radius:8px;padding:12px;text-align:center;border:1px solid var(--border);">
+      <div style="font-size:0.78rem;color:#9e9e9e;">CV máximo</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#ffb74d;">0.102</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 15: SISTEMA DIFUSO Y PRUEBA STREAMING -->
+<div class="slide" id="slide-15">
+  <div class="slide-title">Sistema Difuso Mamdani — Streaming</div>
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:20px;margin-top:8px;">
+    <div>
+      <div style="font-size:0.88rem;font-weight:700;color:#81c784;margin-bottom:10px;">Variables → riesgo_qos [0–100]</div>
+      <ul class="var-list">
+        <li class="var-item" style="border-left-color:#81c784;">
+          <div class="var-name" style="color:#81c784;">usuarios_concurrentes <span style="color:#9e9e9e;font-weight:400;">[0–100]</span></div>
+          <div class="var-labels">bajo · medio · alto</div>
+        </li>
+        <li class="var-item" style="border-left-color:#81c784;">
+          <div class="var-name" style="color:#81c784;">uso_ancho_banda <span style="color:#9e9e9e;font-weight:400;">[0–100%]</span></div>
+          <div class="var-labels">bajo · medio · alto</div>
+        </li>
+        <li class="var-item" style="border-left-color:#81c784;">
+          <div class="var-name" style="color:#81c784;">latencia_red <span style="color:#9e9e9e;font-weight:400;">[0–10 ms]</span></div>
+          <div class="var-labels">baja · media · alta</div>
+        </li>
+        <li class="var-item" style="border-left-color:#81c784;">
+          <div class="var-name" style="color:#81c784;">capacidad_servidor <span style="color:#9e9e9e;font-weight:400;">[0–100%]</span></div>
+          <div class="var-labels">baja · media · alta</div>
+        </li>
+      </ul>
+      <div style="margin-top:12px;background:var(--card-bg);border-radius:6px;padding:10px 14px;border:1px solid var(--border);font-size:0.85rem;">
+        <strong style="color:#81c784;">12 reglas Mamdani</strong> · Defuzzificación: Centroide
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:10px;">Casos de prueba</div>
+      <div class="risk-card high" style="margin-bottom:10px;padding:12px 16px;">
+        <div class="risk-card-label">🔴 Carga máxima</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="risk-card-params">uc=85 · bw=90% · lat=8ms · cap=88%</div>
+          <div class="risk-card-value" style="font-size:1.4rem;">84.44</div>
+        </div>
+      </div>
+      <div class="risk-card low" style="margin-bottom:10px;padding:12px 16px;">
+        <div class="risk-card-label">🟢 Carga mínima</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="risk-card-params">uc=10 · bw=15% · lat=1ms · cap=20%</div>
+          <div class="risk-card-value" style="font-size:1.4rem;">15.56</div>
+        </div>
+      </div>
+      <div class="risk-card mid" style="padding:12px 16px;">
+        <div class="risk-card-label">🟡 Carga normal</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div class="risk-card-params">uc=55 · bw=60% · lat=5ms · cap=60%</div>
+          <div class="risk-card-value" style="font-size:1.4rem;">50.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 16: MONTECARLO STREAMING -->
+<div class="slide" id="slide-16">
+  <div class="slide-title">Montecarlo — Streaming</div>
+  <div class="slide-subtitle">5 000 simulaciones · RANDOM_SEED = 42</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px;">
+    <div>
+      <table>
+        <thead><tr><th>Estadístico</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>Media</td><td style="color:#81c784;font-weight:700;">39.58</td></tr>
+          <tr><td>Mediana (P50)</td><td>42.26</td></tr>
+          <tr><td>Desv. estándar</td><td>17.20</td></tr>
+          <tr><td>Percentil 95 (P95)</td><td style="color:#ffb74d;font-weight:700;">70.82</td></tr>
+          <tr><td>Máximo</td><td>84.44</td></tr>
+          <tr><td><strong>P(riesgo_qos ≥ 70)</strong></td><td style="color:#ef5350;font-weight:700;">5.3%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:4px;">Distribuciones utilizadas</div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #81c784;font-size:0.85rem;">
+        <strong style="color:#81c784;">usuarios_concurrentes</strong><br>
+        <span style="color:#9e9e9e;">Beta (α=2, β=3) × 100 → carga media-baja con picos</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #4fc3f7;font-size:0.85rem;">
+        <strong style="color:#4fc3f7;">uso_ancho_banda</strong><br>
+        <span style="color:#9e9e9e;">Normal Truncada (μ=55, σ=20) → [0, 100]</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #ffb74d;font-size:0.85rem;">
+        <strong style="color:#ffb74d;">latencia_red</strong><br>
+        <span style="color:#9e9e9e;">Triangular (min=0, moda=3, max=10)</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:6px;padding:10px 14px;border-left:3px solid #ce93d8;font-size:0.85rem;">
+        <strong style="color:#ce93d8;">capacidad_servidor</strong><br>
+        <span style="color:#9e9e9e;">Beta (α=3, β=2) × 100 → alta utilización típica</span>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box danger" style="margin-top:16px;font-size:1.05rem;">
+    ⚠️ 265 de 5 000 escenarios son críticos (riesgo_qos ≥ 70)
+  </div>
+</div>
+
+<!-- SLIDE 17: REGRESIÓN STREAMING -->
+<div class="slide" id="slide-17">
+  <div class="slide-title">Regresión — Streaming</div>
+  <table>
+    <thead>
+      <tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>R²</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>KNN (k=5)</td><td>7.26</td><td>10.55</td><td>0.638</td></tr>
+      <tr><td>Decision Tree</td><td>1.69</td><td>4.43</td><td>0.936</td></tr>
+      <tr class="best-row"><td><strong>Random Forest</strong> <span class="td-star">⭐</span></td><td class="td-green"><strong>1.40</strong></td><td class="td-green"><strong>3.22</strong></td><td class="td-green"><strong>0.966</strong></td></tr>
+    </tbody>
+  </table>
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div>
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:10px;">Correlación de Pearson</div>
+      <div style="background:var(--card-bg);border-radius:8px;padding:16px;text-align:center;border:1px solid var(--border);">
+        <div style="font-size:2rem;font-weight:800;color:#81c784;">r = 0.9832</div>
+        <div style="font-size:0.82rem;color:#9e9e9e;margin-top:4px;">Correlación muy alta — mejor que el caso base</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:0.88rem;font-weight:700;color:#ffb74d;margin-bottom:10px;">Importancia de Variables (Random Forest)</div>
+      <div class="importance-list">
+        <div class="importance-item">
+          <div class="importance-label"><span style="color:#81c784;">usuarios_concurrentes</span><span>30.32%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:30.32%;background:linear-gradient(90deg,#81c784,#4fc3f7)"></div></div>
+        </div>
+        <div class="importance-item">
+          <div class="importance-label"><span>latencia_red</span><span>29.36%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:29.36%;background:linear-gradient(90deg,#4fc3f7,#81c784)"></div></div>
+        </div>
+        <div class="importance-item">
+          <div class="importance-label"><span>uso_ancho_banda</span><span>20.32%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:20.32%;background:linear-gradient(90deg,#ffb74d,#81c784)"></div></div>
+        </div>
+        <div class="importance-item">
+          <div class="importance-label"><span>capacidad_servidor</span><span>20.00%</span></div>
+          <div class="importance-bar-bg"><div class="importance-bar" style="width:20%;background:linear-gradient(90deg,#ce93d8,#4fc3f7)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 18: COMPARACIÓN -->
+<div class="slide" id="slide-18">
+  <div class="slide-title">Comparación: Caso Base vs. Proyecto Final</div>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Aspecto</th><th style="color:#4fc3f7;">Caso Base (Académico)</th><th style="color:#81c784;">Proyecto Final (Streaming)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Variables de entrada</td>
+        <td style="color:#9e9e9e;font-size:0.85rem;">promedio, inasistencia, horas, motivacion</td>
+        <td style="color:#9e9e9e;font-size:0.85rem;">usuarios, ancho_banda, latencia, capacidad</td>
+      </tr>
+      <tr>
+        <td>Simulaciones Montecarlo</td>
+        <td style="color:#4fc3f7;font-weight:700;">1 000</td>
+        <td style="color:#81c784;font-weight:700;">5 000</td>
+      </tr>
+      <tr>
+        <td>Media del riesgo</td>
+        <td style="color:#4fc3f7;font-weight:700;">51.38</td>
+        <td style="color:#81c784;font-weight:700;">39.58</td>
+      </tr>
+      <tr>
+        <td>P(riesgo ≥ 70)</td>
+        <td style="color:#ef5350;font-weight:700;">7.1%</td>
+        <td style="color:#ffb74d;font-weight:700;">5.3%</td>
+      </tr>
+      <tr>
+        <td>Mejor modelo R²</td>
+        <td style="color:#4fc3f7;font-weight:700;">0.840</td>
+        <td style="color:#81c784;font-weight:700;">0.966</td>
+      </tr>
+      <tr>
+        <td>Correlación Pearson r</td>
+        <td style="color:#4fc3f7;font-weight:700;">0.919</td>
+        <td style="color:#81c784;font-weight:700;">0.983</td>
+      </tr>
+      <tr>
+        <td>Variable más importante</td>
+        <td style="color:#4fc3f7;font-weight:700;">promedio_academico (45.9%)</td>
+        <td style="color:#81c784;font-weight:700;">usuarios_concurrentes (30.3%)</td>
+      </tr>
+      <tr>
+        <td>Consenso Delphi</td>
+        <td class="td-green">4/4 · 100%</td>
+        <td class="td-green">4/4 · 100%</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight-box" style="margin-top:16px;">
+    Ambos casos demuestran la robustez y replicabilidad de la metodología Delphi → Difuso → Montecarlo → Regresión
+  </div>
+</div>
+
+<!-- SLIDE 19: CONCLUSIONES -->
+<div class="slide" id="slide-19">
+  <div class="slide-title">Conclusiones</div>
+  <div class="conclusions-list">
+    <div class="conclusion-item">
+      <div class="conclusion-num">✅</div>
+      <div class="conclusion-text">El <strong>Método Delphi</strong> validó correctamente los factores en ambos casos (4/4 variables, 100% consenso), garantizando que el modelo tiene respaldo experto institucional.</div>
+    </div>
+    <div class="conclusion-item" style="border-left-color:#4fc3f7;">
+      <div class="conclusion-num">🔷</div>
+      <div class="conclusion-text">El <strong>Sistema Difuso Mamdani</strong> produce resultados coherentes con el conocimiento experto: los tres casos de prueba (alto, medio, bajo) responden correctamente en ambos dominios.</div>
+    </div>
+    <div class="conclusion-item" style="border-left-color:#ffb74d;">
+      <div class="conclusion-num">🎲</div>
+      <div class="conclusion-text"><strong>Montecarlo</strong> revela que el riesgo crítico (≥ 70) ocurre en el 5–7% de los escenarios típicos: 71/1000 en el caso académico y 265/5000 en streaming.</div>
+    </div>
+    <div class="conclusion-item" style="border-left-color:#ce93d8;">
+      <div class="conclusion-num">📊</div>
+      <div class="conclusion-text"><strong>Random Forest</strong> aproxima excelentemente el sistema difuso: R² = 0.840 (académico) y R² = 0.966 (streaming), con correlaciones de Pearson r &gt; 0.91 en ambos casos.</div>
+    </div>
+    <div class="conclusion-item" style="border-left-color:#ef5350;">
+      <div class="conclusion-num">🔗</div>
+      <div class="conclusion-text">La <strong>trazabilidad es completa</strong>: Delphi → Variables difusas → Reglas → Montecarlo → Base simulada → Regresión. Cada etapa se justifica en la anterior.</div>
+    </div>
+    <div class="conclusion-item" style="border-left-color:#ffb74d;">
+      <div class="conclusion-num">🔑</div>
+      <div class="conclusion-text"><strong>Principio central cumplido:</strong> NADA fue inventado sin consenso experto. Todas las variables, rangos y reglas tienen origen en el proceso Delphi.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 20: CIERRE -->
+<div class="slide closing-slide" id="slide-20">
+  <div class="closing-title">¡Gracias!</div>
+  <div class="cover-divider" style="background:linear-gradient(90deg,#81c784,#4fc3f7);"></div>
+  <div class="cover-subtitle" style="color:#4fc3f7;">Taller 2 — Modelos y Simulación</div>
+  <div class="cover-authors">Julian Zapata · Juan José Orrego</div>
+  <div class="cover-inst">I.U. Pascual Bravo · Medellín · 2026</div>
+  <div class="closing-quote">
+    "El sistema difuso depende completamente del consenso de expertos.<br>
+    Sin Delphi, no hay variables. Sin variables, no hay reglas. Sin reglas, no hay modelo."
+  </div>
+  <div style="margin-top:20px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+    <div style="background:rgba(79,195,247,0.1);border:1px solid #4fc3f7;border-radius:8px;padding:10px 20px;text-align:center;">
+      <div style="font-size:0.75rem;color:#9e9e9e;">Caso Base</div>
+      <div style="font-size:1rem;font-weight:700;color:#4fc3f7;">R² = 0.840 · r = 0.919</div>
+    </div>
+    <div style="background:rgba(129,199,132,0.1);border:1px solid #81c784;border-radius:8px;padding:10px 20px;text-align:center;">
+      <div style="font-size:0.75rem;color:#9e9e9e;">Proyecto Final</div>
+      <div style="font-size:1rem;font-weight:700;color:#81c784;">R² = 0.966 · r = 0.983</div>
+    </div>
+    <div style="background:rgba(255,183,77,0.1);border:1px solid #ffb74d;border-radius:8px;padding:10px 20px;text-align:center;">
+      <div style="font-size:0.75rem;color:#9e9e9e;">Consenso Delphi</div>
+      <div style="font-size:1rem;font-weight:700;color:#ffb74d;">8/8 variables · 100%</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end #presentation -->
+
+<!-- NAVIGATION -->
+<div id="nav-counter">1 / 20</div>
+<button class="nav-btn" id="btn-prev" onclick="prevSlide()" title="Anterior (←)">&#8592;</button>
+<button class="nav-btn" id="btn-next" onclick="nextSlide()" title="Siguiente (→)">&#8594;</button>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+const counter = document.getElementById('nav-counter');
+
+function showSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (n + total) % total;
+  slides[currentSlide].classList.add('active');
+  counter.textContent = (currentSlide + 1) + ' / ' + total;
+  // Scroll to top of slide
+  slides[currentSlide].scrollTop = 0;
+}
+
+function nextSlide() { showSlide(currentSlide + 1); }
+function prevSlide() { showSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); prevSlide(); }
+});
+
+// Touch/swipe support
+let touchStartX = 0;
+document.addEventListener('touchstart', function(e) { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', function(e) {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) { dx < 0 ? nextSlide() : prevSlide(); }
+});
+
+// Initialize
+showSlide(0);
+</script>
+</body>
+</html>
