@@ -1,0 +1,699 @@
+{
+  "warnings": [
+    {
+      "timestamp": "2026-04-17T17:49:12.831584+00:00",
+      "tipo": "valor_fuera_universo",
+      "mensaje": "Valor -1.0 de 'promedio_academico' recortado al límite inferior 0.0",
+      "variable": "promedio_academico",
+      "valor_original": -1.0,
+      "valor_recortado": 0.0
+    },
+    {
+      "timestamp": "2026-04-17T17:49:12.832171+00:00",
+      "tipo": "valor_fuera_universo",
+      "mensaje": "Valor 110.0 de 'inasistencia' recortado al límite superior 100.0",
+      "variable": "inasistencia",
+      "valor_original": 110.0,
+      "valor_recortado": 100.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:14.604452+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:14.694670+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:14.703968+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:14.720104+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:14.968375+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:14.983397+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.017509+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.024670+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.118390+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.156879+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.202945+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.238934+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.267707+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.361995+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.369566+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.433012+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.586408+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.634488+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.684484+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.689551+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.796665+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.839590+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.871376+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.894996+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:15.969427+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.014280+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.161730+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.185644+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.236508+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.338541+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.375478+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.386710+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.397881+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.519209+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.547143+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.585842+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.679757+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.708207+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.724734+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.779277+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.841788+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.872499+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.887391+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:16.949365+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.006152+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.067232+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.109640+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.136040+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.203849+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.225545+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.230640+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.314099+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.329153+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.339822+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.429023+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.577731+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.599893+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.605172+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.613632+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.725943+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.755123+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.778516+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.794333+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.800429+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.807655+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:17.992519+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.091032+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.143836+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.213082+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.227979+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.253548+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.318381+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.361886+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.377146+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.401934+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.478500+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.497042+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.516367+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.564486+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.780235+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.789971+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.813140+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.841333+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.939437+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:18.952538+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.072412+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.123370+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.153121+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.177646+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.210561+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.243626+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.263500+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.281022+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.337951+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.445585+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.484040+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    },
+    {
+      "timestamp": "2026-04-17T18:01:19.533166+00:00",
+      "tipo": "error_motor_difuso",
+      "mensaje": "Error en el motor difuso: 'riesgo'. Retornando valor de fallback 50.0",
+      "variable": "riesgo",
+      "valor_recortado": 50.0
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "variables_entrada": [
+    {
+      "nombre": "promedio_academico",
+      "universo": [
+        0.0,
+        5.0
+      ],
+      "step": 0.01,
+      "etiquetas": [
+        {
+          "nombre": "bajo",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            2.0,
+            3.0
+          ]
+        },
+        {
+          "nombre": "medio",
+          "tipo": "triangular",
+          "parametros": [
+            2.5,
+            3.5,
+            4.5
+          ]
+        },
+        {
+          "nombre": "alto",
+          "tipo": "trapezoidal",
+          "parametros": [
+            4.0,
+            4.5,
+            5.0,
+            5.0
+          ]
+        }
+      ],
+      "origen_delphi": "promedio_academico"
+    },
+    {
+      "nombre": "inasistencia",
+      "universo": [
+        0.0,
+        100.0
+      ],
+      "step": 0.5,
+      "etiquetas": [
+        {
+          "nombre": "baja",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            15.0,
+            30.0
+          ]
+        },
+        {
+          "nombre": "media",
+          "tipo": "triangular",
+          "parametros": [
+            20.0,
+            40.0,
+            60.0
+          ]
+        },
+        {
+          "nombre": "alta",
+          "tipo": "trapezoidal",
+          "parametros": [
+            50.0,
+            70.0,
+            100.0,
+            100.0
+          ]
+        }
+      ],
+      "origen_delphi": "inasistencia"
+    },
+    {
+      "nombre": "horas_estudio",
+      "universo": [
+        0.0,
+        30.0
+      ],
+      "step": 0.1,
+      "etiquetas": [
+        {
+          "nombre": "pocas",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            5.0,
+            12.0
+          ]
+        },
+        {
+          "nombre": "moderadas",
+          "tipo": "triangular",
+          "parametros": [
+            8.0,
+            15.0,
+            22.0
+          ]
+        },
+        {
+          "nombre": "muchas",
+          "tipo": "trapezoidal",
+          "parametros": [
+            18.0,
+            24.0,
+            30.0,
+            30.0
+          ]
+        }
+      ],
+      "origen_delphi": "horas_estudio"
+    },
+    {
+      "nombre": "motivacion_estres",
+      "universo": [
+        0.0,
+        10.0
+      ],
+      "step": 0.1,
+      "etiquetas": [
+        {
+          "nombre": "bajo",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            3.0,
+            5.0
+          ]
+        },
+        {
+          "nombre": "medio",
+          "tipo": "triangular",
+          "parametros": [
+            3.0,
+            5.0,
+            7.0
+          ]
+        },
+        {
+          "nombre": "alto",
+          "tipo": "trapezoidal",
+          "parametros": [
+            6.0,
+            8.0,
+            10.0,
+            10.0
+          ]
+        }
+      ],
+      "origen_delphi": "motivacion_estres"
+    }
+  ],
+  "variable_salida": {
+    "nombre": "riesgo",
+    "universo": [
+      0.0,
+      100.0
+    ],
+    "step": 0.5,
+    "etiquetas": [
+      {
+        "nombre": "bajo",
+        "tipo": "trapezoidal",
+        "parametros": [
+          0.0,
+          0.0,
+          20.0,
+          40.0
+        ]
+      },
+      {
+        "nombre": "medio",
+        "tipo": "triangular",
+        "parametros": [
+          30.0,
+          50.0,
+          70.0
+        ]
+      },
+      {
+        "nombre": "alto",
+        "tipo": "trapezoidal",
+        "parametros": [
+          60.0,
+          80.0,
+          100.0,
+          100.0
+        ]
+      }
+    ]
+  }
+}

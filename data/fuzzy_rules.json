@@ -1,0 +1,244 @@
+{
+  "reglas": [
+    {
+      "id": "R01",
+      "descripcion": "Si promedio_academico es bajo Y inasistencia es alta ENTONCES riesgo es alto",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R02",
+      "descripcion": "Si motivacion_estres es bajo Y horas_estudio es pocas ENTONCES riesgo es alto",
+      "antecedentes": [
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R03",
+      "descripcion": "Si promedio_academico es bajo Y horas_estudio es pocas ENTONCES riesgo es alto",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R04",
+      "descripcion": "Si promedio_academico es alto Y inasistencia es baja ENTONCES riesgo es bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R05",
+      "descripcion": "Si promedio_academico es alto Y horas_estudio es muchas ENTONCES riesgo es bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "muchas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R06",
+      "descripcion": "Si motivacion_estres es alto Y promedio_academico es alto ENTONCES riesgo es bajo",
+      "antecedentes": [
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R07",
+      "descripcion": "Si promedio_academico es medio Y inasistencia es media ENTONCES riesgo es medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R08",
+      "descripcion": "Si horas_estudio es moderadas Y motivacion_estres es medio ENTONCES riesgo es medio",
+      "antecedentes": [
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "medio"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R09",
+      "descripcion": "Si promedio_academico es bajo Y inasistencia es media ENTONCES riesgo es medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R10",
+      "descripcion": "Si inasistencia es alta Y horas_estudio es pocas ENTONCES riesgo es alto",
+      "antecedentes": [
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R11",
+      "descripcion": "Si promedio_academico es medio Y horas_estudio es pocas ENTONCES riesgo es medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    },
+    {
+      "id": "R12",
+      "descripcion": "Si motivacion_estres es bajo Y inasistencia es alta ENTONCES riesgo es alto",
+      "antecedentes": [
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+    }
+  ]
+}

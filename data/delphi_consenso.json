@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-04-17T17:40:38.280423+00:00",
+  "variables_aprobadas": [
+    {
+      "factor": "promedio_academico",
+      "estadisticos_finales": {
+        "media": 4.75,
+        "std": 0.433,
+        "cv": 0.0912
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    },
+    {
+      "factor": "inasistencia",
+      "estadisticos_finales": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    },
+    {
+      "factor": "horas_estudio",
+      "estadisticos_finales": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    },
+    {
+      "factor": "motivacion_estres",
+      "estadisticos_finales": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    }
+  ],
+  "variables_rechazadas": []
+}

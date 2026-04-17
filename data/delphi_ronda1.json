@@ -1,0 +1,190 @@
+{
+  "ronda": 1,
+  "timestamp": "2026-04-17T17:40:38.277184+00:00",
+  "factores": [
+    {
+      "factor": "promedio_academico",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Dr. Carlos Restrepo",
+          "cargo": "Docente de Ingeniería de Sistemas",
+          "dependencia": "Facultad de Ingeniería",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "En mis cursos de Ingeniería de Sistemas en la Pascual Bravo, el promedio académico es el indicador más directo del rendimiento estudiantil. Los estudiantes con promedios por debajo de 3.5 presentan dificultades acumuladas que raramente se revierten sin intervención temprana."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Adriana Gómez",
+          "cargo": "Coordinadora Académica",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la Vicerrectoría Académica, el promedio es el criterio principal para activar alertas tempranas en el sistema de seguimiento estudiantil de la Pascual Bravo. Un promedio inferior a 3.0 activa automáticamente el protocolo de acompañamiento."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Ps. Juliana Martínez",
+          "cargo": "Psicóloga de Bienestar Estudiantil",
+          "dependencia": "Bienestar Universitario",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "En Bienestar Universitario observamos que los estudiantes con promedios bajos frecuentemente presentan síntomas de ansiedad y baja autoeficacia académica. El promedio actúa como indicador proxy de bienestar psicológico en muchos casos."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Dr. Hernán Ospina",
+          "cargo": "Director de Currículo",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Los datos institucionales de la Pascual Bravo confirman que el promedio académico es el indicador con mayor poder predictivo de permanencia y graduación oportuna en todos los programas de pregrado."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      }
+    },
+    {
+      "factor": "inasistencia",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Dr. Carlos Restrepo",
+          "cargo": "Docente de Ingeniería de Sistemas",
+          "dependencia": "Facultad de Ingeniería",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "He observado que los estudiantes con alta inasistencia en la Facultad de Ingeniería presentan dificultades para recuperar contenidos técnicos acumulativos. Una inasistencia superior al 20 % suele correlacionar con bajo rendimiento al final del semestre."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Adriana Gómez",
+          "cargo": "Coordinadora Académica",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Los reportes de inasistencia que recibimos en la Vicerrectoría Académica muestran que el ausentismo reiterado precede en la mayoría de los casos a la deserción o a la pérdida de materias en el semestre en curso."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Ps. Juliana Martínez",
+          "cargo": "Psicóloga de Bienestar Estudiantil",
+          "dependencia": "Bienestar Universitario",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde Bienestar Universitario, la inasistencia reiterada suele ser una señal de alerta de problemas emocionales, familiares o económicos subyacentes. Atendemos estudiantes que dejan de asistir antes de solicitar ayuda formal."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Dr. Hernán Ospina",
+          "cargo": "Director de Currículo",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la Dirección de Currículo hemos analizado que la inasistencia acumulada impacta negativamente los indicadores de calidad institucional, especialmente en los procesos de acreditación que adelanta la Pascual Bravo."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.5,
+        "std": 0.5,
+        "cv": 0.1111
+      }
+    },
+    {
+      "factor": "horas_estudio",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Dr. Carlos Restrepo",
+          "cargo": "Docente de Ingeniería de Sistemas",
+          "dependencia": "Facultad de Ingeniería",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "En la Facultad de Ingeniería, las asignaturas de programación y matemáticas requieren práctica autónoma constante. Los estudiantes que dedican menos de 8 horas semanales fuera del aula muestran rezagos significativos en evaluaciones parciales."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Adriana Gómez",
+          "cargo": "Coordinadora Académica",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Las encuestas de caracterización estudiantil aplicadas en la Pascual Bravo revelan que las horas de estudio autónomo son un predictor consistente del rendimiento, especialmente en programas con alta carga teórica."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Ps. Juliana Martínez",
+          "cargo": "Psicóloga de Bienestar Estudiantil",
+          "dependencia": "Bienestar Universitario",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "En las sesiones de orientación psicológica identificamos que los estudiantes con pocas horas de estudio frecuentemente reportan dificultades de concentración, procrastinación o situaciones personales que interfieren con su rutina académica."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Dr. Hernán Ospina",
+          "cargo": "Director de Currículo",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Los datos institucionales de la Pascual Bravo muestran que las horas de estudio autónomo son un predictor clave del rendimiento académico. Los programas con mayor carga de trabajo independiente presentan mejores indicadores de aprendizaje profundo."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      }
+    },
+    {
+      "factor": "motivacion_estres",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Dr. Carlos Restrepo",
+          "cargo": "Docente de Ingeniería de Sistemas",
+          "dependencia": "Facultad de Ingeniería",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "He notado que el estrés académico en semestres con alta carga de proyectos afecta directamente la calidad del trabajo entregado. Un nivel de motivación bajo al inicio del semestre es señal de alerta que suelo reportar a Bienestar Universitario."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Adriana Gómez",
+          "cargo": "Coordinadora Académica",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la coordinación académica hemos identificado que los períodos de mayor estrés —parciales y entregas de proyectos— coinciden con los picos de solicitudes de cancelación de materias y de asesorías académicas."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Ps. Juliana Martínez",
+          "cargo": "Psicóloga de Bienestar Estudiantil",
+          "dependencia": "Bienestar Universitario",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "En Bienestar Universitario atendemos estudiantes con altos niveles de estrés que correlacionan directamente con bajo rendimiento. La motivación intrínseca es el factor protector más importante que identificamos en los estudiantes resilientes de la Pascual Bravo."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Dr. Hernán Ospina",
+          "cargo": "Director de Currículo",
+          "dependencia": "Vicerrectoría Académica",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la Dirección de Currículo reconocemos que el diseño curricular debe considerar la carga cognitiva y emocional de los estudiantes. Un alto nivel de estrés sostenido compromete los resultados de aprendizaje esperados en el perfil de egreso."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.5,
+        "std": 0.5,
+        "cv": 0.1111
+      }
+    }
+  ]
+}
