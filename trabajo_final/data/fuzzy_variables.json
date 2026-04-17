@@ -1,0 +1,204 @@
+{
+  "variables_entrada": [
+    {
+      "nombre": "usuarios_concurrentes",
+      "universo": [
+        0.0,
+        100.0
+      ],
+      "step": 0.5,
+      "etiquetas": [
+        {
+          "nombre": "bajo",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            30.0,
+            50.0
+          ]
+        },
+        {
+          "nombre": "medio",
+          "tipo": "triangular",
+          "parametros": [
+            40.0,
+            60.0,
+            80.0
+          ]
+        },
+        {
+          "nombre": "alto",
+          "tipo": "trapezoidal",
+          "parametros": [
+            70.0,
+            85.0,
+            100.0,
+            100.0
+          ]
+        }
+      ],
+      "origen_delphi": "usuarios_concurrentes"
+    },
+    {
+      "nombre": "uso_ancho_banda",
+      "universo": [
+        0.0,
+        100.0
+      ],
+      "step": 0.5,
+      "etiquetas": [
+        {
+          "nombre": "bajo",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            30.0,
+            50.0
+          ]
+        },
+        {
+          "nombre": "medio",
+          "tipo": "triangular",
+          "parametros": [
+            40.0,
+            60.0,
+            80.0
+          ]
+        },
+        {
+          "nombre": "alto",
+          "tipo": "trapezoidal",
+          "parametros": [
+            70.0,
+            85.0,
+            100.0,
+            100.0
+          ]
+        }
+      ],
+      "origen_delphi": "uso_ancho_banda"
+    },
+    {
+      "nombre": "latencia_red",
+      "universo": [
+        0.0,
+        10.0
+      ],
+      "step": 0.05,
+      "etiquetas": [
+        {
+          "nombre": "baja",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            2.0,
+            4.0
+          ]
+        },
+        {
+          "nombre": "media",
+          "tipo": "triangular",
+          "parametros": [
+            3.0,
+            5.0,
+            7.0
+          ]
+        },
+        {
+          "nombre": "alta",
+          "tipo": "trapezoidal",
+          "parametros": [
+            6.0,
+            8.0,
+            10.0,
+            10.0
+          ]
+        }
+      ],
+      "origen_delphi": "latencia_red"
+    },
+    {
+      "nombre": "capacidad_servidor",
+      "universo": [
+        0.0,
+        100.0
+      ],
+      "step": 0.5,
+      "etiquetas": [
+        {
+          "nombre": "baja",
+          "tipo": "trapezoidal",
+          "parametros": [
+            0.0,
+            0.0,
+            30.0,
+            50.0
+          ]
+        },
+        {
+          "nombre": "media",
+          "tipo": "triangular",
+          "parametros": [
+            40.0,
+            60.0,
+            80.0
+          ]
+        },
+        {
+          "nombre": "alta",
+          "tipo": "trapezoidal",
+          "parametros": [
+            70.0,
+            85.0,
+            100.0,
+            100.0
+          ]
+        }
+      ],
+      "origen_delphi": "capacidad_servidor"
+    }
+  ],
+  "variable_salida": {
+    "nombre": "riesgo_qos",
+    "universo": [
+      0.0,
+      100.0
+    ],
+    "step": 0.5,
+    "etiquetas": [
+      {
+        "nombre": "bajo",
+        "tipo": "trapezoidal",
+        "parametros": [
+          0.0,
+          0.0,
+          20.0,
+          40.0
+        ]
+      },
+      {
+        "nombre": "medio",
+        "tipo": "triangular",
+        "parametros": [
+          30.0,
+          50.0,
+          70.0
+        ]
+      },
+      {
+        "nombre": "alto",
+        "tipo": "trapezoidal",
+        "parametros": [
+          60.0,
+          80.0,
+          100.0,
+          100.0
+        ]
+      }
+    ],
+    "defuzzificacion": "centroide"
+  }
+}

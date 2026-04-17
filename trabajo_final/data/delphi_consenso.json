@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-04-17T21:48:04.920803+00:00",
+  "variables_aprobadas": [
+    {
+      "factor": "usuarios_concurrentes",
+      "estadisticos_finales": {
+        "media": 4.75,
+        "std": 0.433,
+        "cv": 0.0912
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    },
+    {
+      "factor": "uso_ancho_banda",
+      "estadisticos_finales": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    },
+    {
+      "factor": "latencia_red",
+      "estadisticos_finales": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    },
+    {
+      "factor": "capacidad_servidor",
+      "estadisticos_finales": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      },
+      "criterios": {
+        "mean_ok": true,
+        "cv_ok": true,
+        "approval_ok": true,
+        "approval_pct": 100.0
+      },
+      "aprobado": true,
+      "criterio_fallido": null
+    }
+  ],
+  "variables_rechazadas": []
+}

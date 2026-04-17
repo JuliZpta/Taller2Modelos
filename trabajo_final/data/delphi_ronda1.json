@@ -1,0 +1,190 @@
+{
+  "ronda": 1,
+  "timestamp": "2026-04-17T21:48:04.918506+00:00",
+  "factores": [
+    {
+      "factor": "usuarios_concurrentes",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Ing. Santiago Vargas",
+          "cargo": "Arquitecto de Infraestructura Cloud",
+          "dependencia": "Área de Plataformas Digitales",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "En nuestra infraestructura cloud, el número de usuarios concurrentes es el principal driver de escalado. Superado el 70% de capacidad, activamos auto-scaling para evitar degradación del servicio y garantizar la disponibilidad de la plataforma de streaming."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Valentina Torres",
+          "cargo": "Analista de QoS y Redes",
+          "dependencia": "Área de Operaciones de Red",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Como analista de QoS y redes, este factor es un indicador clave en el monitoreo continuo de la calidad del servicio de streaming y la experiencia de usuario en condiciones de carga variable."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Dr. Felipe Morales",
+          "cargo": "Investigador en Sistemas Distribuidos",
+          "dependencia": "Departamento de I+D",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Los modelos de carga en sistemas distribuidos muestran comportamiento no lineal cuando la concurrencia supera el 75% de la capacidad nominal. Nuestras investigaciones en sistemas de streaming confirman este umbral crítico para la degradación del servicio."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Ing. Camila Ríos",
+          "cargo": "Especialista en Experiencia de Usuario (UX)",
+          "dependencia": "Área de Producto",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la perspectiva de la experiencia de usuario, este factor influye directamente en la percepción de calidad del servicio de streaming y en las métricas de satisfacción y retención de usuarios de la plataforma."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      }
+    },
+    {
+      "factor": "uso_ancho_banda",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Ing. Santiago Vargas",
+          "cargo": "Arquitecto de Infraestructura Cloud",
+          "dependencia": "Área de Plataformas Digitales",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "El ancho de banda es el cuello de botella más frecuente en plataformas de streaming. Monitoreamos en tiempo real y aplicamos CDN cuando supera el 80% para distribuir la carga y mantener la calidad del servicio."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Valentina Torres",
+          "cargo": "Analista de QoS y Redes",
+          "dependencia": "Área de Operaciones de Red",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Como analista de QoS y redes, este factor es un indicador clave en el monitoreo continuo de la calidad del servicio de streaming y la experiencia de usuario en condiciones de carga variable."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Dr. Felipe Morales",
+          "cargo": "Investigador en Sistemas Distribuidos",
+          "dependencia": "Departamento de I+D",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "La distribución del ancho de banda en plataformas de streaming sigue patrones de Pareto: el 20% de los usuarios consume el 80% del ancho de banda disponible. Este fenómeno debe modelarse con distribuciones asimétricas para capturar los picos de demanda."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Ing. Camila Ríos",
+          "cargo": "Especialista en Experiencia de Usuario (UX)",
+          "dependencia": "Área de Producto",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la perspectiva de la experiencia de usuario, este factor influye directamente en la percepción de calidad del servicio de streaming y en las métricas de satisfacción y retención de usuarios de la plataforma."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.5,
+        "std": 0.5,
+        "cv": 0.1111
+      }
+    },
+    {
+      "factor": "latencia_red",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Ing. Santiago Vargas",
+          "cargo": "Arquitecto de Infraestructura Cloud",
+          "dependencia": "Área de Plataformas Digitales",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde mi experiencia como arquitecto de infraestructura cloud, este factor tiene una influencia relevante en la estabilidad y escalabilidad de la plataforma de streaming bajo condiciones de alta demanda."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Valentina Torres",
+          "cargo": "Analista de QoS y Redes",
+          "dependencia": "Área de Operaciones de Red",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "La latencia es el indicador más sensible para el usuario final. Una latencia superior a 150ms genera buffering visible que impacta directamente la retención de usuarios y la percepción de calidad del servicio de streaming."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Dr. Felipe Morales",
+          "cargo": "Investigador en Sistemas Distribuidos",
+          "dependencia": "Departamento de I+D",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la perspectiva de la investigación en sistemas distribuidos, este factor presenta comportamientos emergentes que son relevantes para modelar la degradación del servicio en plataformas de streaming bajo condiciones de alta concurrencia."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Ing. Camila Ríos",
+          "cargo": "Especialista en Experiencia de Usuario (UX)",
+          "dependencia": "Área de Producto",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Los estudios de UX muestran que el usuario percibe degradación de calidad a partir de 100ms de latencia. Por encima de 200ms, la tasa de abandono aumenta un 40%, lo que tiene un impacto directo en la retención y satisfacción del usuario de la plataforma."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.25,
+        "std": 0.433,
+        "cv": 0.1019
+      }
+    },
+    {
+      "factor": "capacidad_servidor",
+      "respuestas": [
+        {
+          "experto_id": "E1",
+          "nombre": "Ing. Santiago Vargas",
+          "cargo": "Arquitecto de Infraestructura Cloud",
+          "dependencia": "Área de Plataformas Digitales",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde mi experiencia como arquitecto de infraestructura cloud, este factor tiene una influencia relevante en la estabilidad y escalabilidad de la plataforma de streaming bajo condiciones de alta demanda."
+        },
+        {
+          "experto_id": "E2",
+          "nombre": "Mg. Valentina Torres",
+          "cargo": "Analista de QoS y Redes",
+          "dependencia": "Área de Operaciones de Red",
+          "puntuacion": 5,
+          "puntuacion_anterior": null,
+          "justificacion": "El uso de CPU por encima del 85% correlaciona con timeouts y errores de transcodificación que degradan la calidad del stream. Monitoreamos este indicador como señal de alerta temprana en nuestros dashboards de QoS."
+        },
+        {
+          "experto_id": "E3",
+          "nombre": "Dr. Felipe Morales",
+          "cargo": "Investigador en Sistemas Distribuidos",
+          "dependencia": "Departamento de I+D",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Desde la perspectiva de la investigación en sistemas distribuidos, este factor presenta comportamientos emergentes que son relevantes para modelar la degradación del servicio en plataformas de streaming bajo condiciones de alta concurrencia."
+        },
+        {
+          "experto_id": "E4",
+          "nombre": "Ing. Camila Ríos",
+          "cargo": "Especialista en Experiencia de Usuario (UX)",
+          "dependencia": "Área de Producto",
+          "puntuacion": 4,
+          "puntuacion_anterior": null,
+          "justificacion": "Cuando el servidor supera el 90% de capacidad, los tiempos de respuesta se vuelven impredecibles y la experiencia del usuario se deteriora significativamente. Los usuarios perciben esto como 'lentitud' o 'congelamiento' del contenido en streaming."
+        }
+      ],
+      "estadisticos": {
+        "media": 4.5,
+        "std": 0.5,
+        "cv": 0.1111
+      }
+    }
+  ]
+}
