@@ -1,10 +1,25 @@
-pandas==2.2.2
-numpy==1.26.4
-matplotlib==3.9.0
-plotly==5.22.0
-scikit-fuzzy==0.4.2
-scikit-learn==1.5.0
-hypothesis==6.103.1
-scipy==1.13.1
-notebook==7.2.0
-ipykernel==6.29.4
+# Taller 2 — Modelos y Simulación
+# Institución Universitaria Pascual Bravo · 2026
+# Instalar con: pip install -r requirements.txt
+
+# Datos y cálculo
+pandas>=2.2.0
+numpy>=1.26.0
+scipy>=1.13.0
+
+# Visualización
+matplotlib>=3.9.0
+plotly>=5.22.0
+
+# Sistema difuso
+scikit-fuzzy>=0.4.2
+
+# Machine learning
+scikit-learn>=1.5.0
+
+# App interactiva (entregable principal)
+streamlit>=1.40.0
+
+# Notebook (opcional)
+notebook>=7.0.0
+ipykernel>=6.29.0
