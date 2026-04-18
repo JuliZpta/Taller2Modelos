@@ -170,30 +170,48 @@
     "step": 0.5,
     "etiquetas": [
       {
-        "nombre": "bajo",
+        "nombre": "muy_bajo",
         "tipo": "trapezoidal",
         "parametros": [
           0.0,
           0.0,
-          20.0,
-          40.0
+          8.0,
+          20.0
+        ]
+      },
+      {
+        "nombre": "bajo",
+        "tipo": "triangular",
+        "parametros": [
+          10.0,
+          22.0,
+          38.0
         ]
       },
       {
         "nombre": "medio",
         "tipo": "triangular",
         "parametros": [
-          30.0,
-          50.0,
-          70.0
+          28.0,
+          47.0,
+          63.0
         ]
       },
       {
         "nombre": "alto",
+        "tipo": "triangular",
+        "parametros": [
+          55.0,
+          70.0,
+          83.0
+        ]
+      },
+      {
+        "nombre": "muy_alto",
         "tipo": "trapezoidal",
         "parametros": [
-          60.0,
-          80.0,
+          75.0,
+          87.0,
           100.0,
           100.0
         ]

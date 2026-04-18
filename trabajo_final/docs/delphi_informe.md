@@ -2,7 +2,7 @@
 
 ## Parte E — Taller 2 de Modelos y Simulación
 
-**Fecha de generación:** 2026-04-17 22:05 UTC
+**Fecha de generación:** 2026-04-18 01:34 UTC
 
 ---
 

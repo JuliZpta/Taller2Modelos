@@ -10,24 +10,24 @@ Este documento describe las distribuciones estadísticas utilizadas para muestre
 
 | Variable | Distribución | Parámetros | Justificación |
 |---|---|---|---|
-| `promedio_academico` | Normal Truncada | mean=3.5, std=0.7, low=0.0, high=5.0 | El promedio académico en poblaciones universitarias sigue una distribución aproximadamente normal. Se trunca en [0,5] para respetar el universo de discurso. Media 3.5 y std 0.7 reflejan la distribución típica observada en instituciones colombianas. |
-| `inasistencia` | Beta | alpha=2.0, beta=5.0, scale=100.0 | La inasistencia es una proporción en [0,100]. La distribución Beta(2,5) modela la asimetría positiva observada: la mayoría de estudiantes tiene inasistencia baja, con cola hacia valores altos. |
-| `horas_estudio` | Triangular | low=0.0, mode=12.0, high=30.0 | Las horas de estudio tienen límites naturales claros (0–30 h/semana). La distribución triangular es apropiada cuando se conocen mínimo, máximo y valor más probable. Moda en 12 h refleja el promedio reportado en encuestas de hábitos de estudio universitario. |
-| `motivacion_estres` | Triangular | low=0.0, mode=5.0, high=10.0 | Escala subjetiva [0–10] con distribución simétrica alrededor del punto medio. La triangular con moda=5 modela la tendencia central sin asumir normalidad en escalas ordinales. |
+| `promedio_academico` | uniform | low=0.5, high=5.0 | Se usa distribución uniforme para cubrir todo el espacio de estados del sistema difuso y obtener una distribución de riesgo representativa de todos los escenarios posibles, desde el más favorable al más crítico. |
+| `inasistencia` | uniform | low=0.0, high=100.0 | Distribución uniforme para explorar todo el rango de inasistencia y garantizar cobertura completa del espacio de entrada del sistema difuso. |
+| `horas_estudio` | uniform | low=0.0, high=30.0 | Distribución uniforme sobre el universo de discurso [0,30] para explorar todos los escenarios posibles de dedicación al estudio. |
+| `motivacion_estres` | uniform | low=0.0, high=10.0 | Distribución uniforme sobre la escala [0,10] para cubrir todos los niveles de motivación/estrés en la simulación. |
 
 ## Estadísticas de la Simulación
 
 | Estadístico | Valor |
 |---|---|
-| Media del riesgo | 51.3808 |
-| Desviación estándar | 13.1247 |
-| Mínimo | 15.5556 |
-| Percentil 25 (P25) | 50.0000 |
-| Mediana (P50) | 50.0000 |
-| Percentil 75 (P75) | 56.0795 |
-| Percentil 95 (P95) | 72.2141 |
-| Máximo | 84.3612 |
-| P(riesgo ≥ 70) | 0.0710 (7.1%) |
+| Media del riesgo | 54.6393 |
+| Desviación estándar | 22.9978 |
+| Mínimo | 7.4286 |
+| Percentil 25 (P25) | 38.3810 |
+| Mediana (P50) | 48.6096 |
+| Percentil 75 (P75) | 69.3286 |
+| Percentil 95 (P95) | 90.1842 |
+| Máximo | 90.1842 |
+| P(riesgo ≥ 70) | 0.2416 (24.2%) |
 
 ## Notas Metodológicas
 

@@ -23,41 +23,36 @@ from scipy.stats import truncnorm
 
 DISTRIBUTIONS: dict[str, dict] = {
     "promedio_academico": {
-        "type": "truncated_normal",
-        "params": {"mean": 3.5, "std": 0.7, "low": 0.0, "high": 5.0},
+        "type": "uniform",
+        "params": {"low": 0.5, "high": 5.0},
         "justification": (
-            "El promedio académico en poblaciones universitarias sigue una "
-            "distribución aproximadamente normal. Se trunca en [0,5] para "
-            "respetar el universo de discurso. Media 3.5 y std 0.7 reflejan "
-            "la distribución típica observada en instituciones colombianas."
+            "Se usa distribución uniforme para cubrir todo el espacio de estados "
+            "del sistema difuso y obtener una distribución de riesgo representativa "
+            "de todos los escenarios posibles, desde el más favorable al más crítico."
         ),
     },
     "inasistencia": {
-        "type": "beta",
-        "params": {"alpha": 2.0, "beta": 5.0, "scale": 100.0},
+        "type": "uniform",
+        "params": {"low": 0.0, "high": 100.0},
         "justification": (
-            "La inasistencia es una proporción en [0,100]. La distribución "
-            "Beta(2,5) modela la asimetría positiva observada: la mayoría de "
-            "estudiantes tiene inasistencia baja, con cola hacia valores altos."
+            "Distribución uniforme para explorar todo el rango de inasistencia "
+            "y garantizar cobertura completa del espacio de entrada del sistema difuso."
         ),
     },
     "horas_estudio": {
-        "type": "triangular",
-        "params": {"low": 0.0, "mode": 12.0, "high": 30.0},
+        "type": "uniform",
+        "params": {"low": 0.0, "high": 30.0},
         "justification": (
-            "Las horas de estudio tienen límites naturales claros (0–30 h/semana). "
-            "La distribución triangular es apropiada cuando se conocen mínimo, "
-            "máximo y valor más probable. Moda en 12 h refleja el promedio "
-            "reportado en encuestas de hábitos de estudio universitario."
+            "Distribución uniforme sobre el universo de discurso [0,30] para "
+            "explorar todos los escenarios posibles de dedicación al estudio."
         ),
     },
     "motivacion_estres": {
-        "type": "triangular",
-        "params": {"low": 0.0, "mode": 5.0, "high": 10.0},
+        "type": "uniform",
+        "params": {"low": 0.0, "high": 10.0},
         "justification": (
-            "Escala subjetiva [0–10] con distribución simétrica alrededor del "
-            "punto medio. La triangular con moda=5 modela la tendencia central "
-            "sin asumir normalidad en escalas ordinales."
+            "Distribución uniforme sobre la escala [0,10] para cubrir todos "
+            "los niveles de motivación/estrés en la simulación."
         ),
     },
 }
@@ -193,6 +188,11 @@ class MontecarloSimulator:
                 mode = params["mode"]
                 high = params["high"]
                 valor = self._rng.triangular(low, mode, high)
+
+            elif dist_type == "uniform":
+                low = params["low"]
+                high = params["high"]
+                valor = self._rng.uniform(low, high)
 
             else:
                 raise ValueError(

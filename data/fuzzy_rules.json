@@ -2,7 +2,7 @@
   "reglas": [
     {
       "id": "R01",
-      "descripcion": "Si promedio_academico es bajo Y inasistencia es alta ENTONCES riesgo es alto",
+      "descripcion": "promedio_academico=bajo AND inasistencia=alta → riesgo=muy_alto",
       "antecedentes": [
         {
           "variable": "promedio_academico",
@@ -15,40 +15,24 @@
       ],
       "consecuente": {
         "variable": "riesgo",
-        "etiqueta": "alto"
+        "etiqueta": "muy_alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R02",
-      "descripcion": "Si motivacion_estres es bajo Y horas_estudio es pocas ENTONCES riesgo es alto",
-      "antecedentes": [
-        {
-          "variable": "motivacion_estres",
-          "etiqueta": "bajo"
-        },
-        {
-          "variable": "horas_estudio",
-          "etiqueta": "pocas"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "alto"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R03",
-      "descripcion": "Si promedio_academico es bajo Y horas_estudio es pocas ENTONCES riesgo es alto",
+      "descripcion": "promedio_academico=bajo AND inasistencia=media AND horas_estudio=pocas → riesgo=alto",
       "antecedentes": [
         {
           "variable": "promedio_academico",
           "etiqueta": "bajo"
         },
         {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
           "variable": "horas_estudio",
           "etiqueta": "pocas"
         }
@@ -58,11 +42,539 @@
         "etiqueta": "alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R03",
+      "descripcion": "promedio_academico=bajo AND inasistencia=media AND motivacion_estres=bajo → riesgo=alto",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R04",
-      "descripcion": "Si promedio_academico es alto Y inasistencia es baja ENTONCES riesgo es bajo",
+      "descripcion": "promedio_academico=bajo AND inasistencia=baja AND horas_estudio=pocas → riesgo=alto",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R05",
+      "descripcion": "promedio_academico=bajo AND inasistencia=baja AND motivacion_estres=bajo → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R06",
+      "descripcion": "promedio_academico=bajo AND inasistencia=baja AND horas_estudio=moderadas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R07",
+      "descripcion": "promedio_academico=bajo AND inasistencia=media AND horas_estudio=moderadas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R08",
+      "descripcion": "promedio_academico=bajo AND inasistencia=media AND motivacion_estres=alto → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "alto"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R09",
+      "descripcion": "promedio_academico=bajo AND inasistencia=baja AND motivacion_estres=alto → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "alto"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R10",
+      "descripcion": "promedio_academico=medio AND inasistencia=alta AND horas_estudio=pocas → riesgo=alto",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R11",
+      "descripcion": "promedio_academico=medio AND inasistencia=alta AND motivacion_estres=bajo → riesgo=alto",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R12",
+      "descripcion": "promedio_academico=medio AND inasistencia=alta AND horas_estudio=moderadas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R13",
+      "descripcion": "promedio_academico=medio AND inasistencia=media AND horas_estudio=pocas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R14",
+      "descripcion": "promedio_academico=medio AND inasistencia=media AND motivacion_estres=bajo → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R15",
+      "descripcion": "promedio_academico=medio AND inasistencia=media AND horas_estudio=moderadas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R16",
+      "descripcion": "promedio_academico=medio AND inasistencia=baja AND horas_estudio=pocas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R17",
+      "descripcion": "promedio_academico=medio AND inasistencia=baja AND motivacion_estres=bajo → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "bajo"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R18",
+      "descripcion": "promedio_academico=medio AND inasistencia=baja AND horas_estudio=moderadas → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R19",
+      "descripcion": "promedio_academico=medio AND inasistencia=baja AND motivacion_estres=alto → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "alto"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R20",
+      "descripcion": "promedio_academico=medio AND inasistencia=media AND motivacion_estres=alto → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "motivacion_estres",
+          "etiqueta": "alto"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R21",
+      "descripcion": "promedio_academico=alto AND inasistencia=alta AND horas_estudio=pocas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R22",
+      "descripcion": "promedio_academico=alto AND inasistencia=alta AND horas_estudio=moderadas → riesgo=medio",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "alta"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R23",
+      "descripcion": "promedio_academico=alto AND inasistencia=media AND horas_estudio=pocas → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R24",
+      "descripcion": "promedio_academico=alto AND inasistencia=media AND horas_estudio=moderadas → riesgo=bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "media"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R25",
+      "descripcion": "promedio_academico=alto AND inasistencia=baja AND horas_estudio=pocas → riesgo=bajo",
       "antecedentes": [
         {
           "variable": "promedio_academico",
@@ -71,6 +583,10 @@
         {
           "variable": "inasistencia",
           "etiqueta": "baja"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "pocas"
         }
       ],
       "consecuente": {
@@ -78,15 +594,43 @@
         "etiqueta": "bajo"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
-      "id": "R05",
-      "descripcion": "Si promedio_academico es alto Y horas_estudio es muchas ENTONCES riesgo es bajo",
+      "id": "R26",
+      "descripcion": "promedio_academico=alto AND inasistencia=baja AND horas_estudio=moderadas → riesgo=muy_bajo",
       "antecedentes": [
         {
           "variable": "promedio_academico",
           "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
+        },
+        {
+          "variable": "horas_estudio",
+          "etiqueta": "moderadas"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R27",
+      "descripcion": "promedio_academico=alto AND inasistencia=baja AND horas_estudio=muchas → riesgo=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "promedio_academico",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "inasistencia",
+          "etiqueta": "baja"
         },
         {
           "variable": "horas_estudio",
@@ -95,150 +639,10 @@
       ],
       "consecuente": {
         "variable": "riesgo",
-        "etiqueta": "bajo"
+        "etiqueta": "muy_bajo"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R06",
-      "descripcion": "Si motivacion_estres es alto Y promedio_academico es alto ENTONCES riesgo es bajo",
-      "antecedentes": [
-        {
-          "variable": "motivacion_estres",
-          "etiqueta": "alto"
-        },
-        {
-          "variable": "promedio_academico",
-          "etiqueta": "alto"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "bajo"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R07",
-      "descripcion": "Si promedio_academico es medio Y inasistencia es media ENTONCES riesgo es medio",
-      "antecedentes": [
-        {
-          "variable": "promedio_academico",
-          "etiqueta": "medio"
-        },
-        {
-          "variable": "inasistencia",
-          "etiqueta": "media"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R08",
-      "descripcion": "Si horas_estudio es moderadas Y motivacion_estres es medio ENTONCES riesgo es medio",
-      "antecedentes": [
-        {
-          "variable": "horas_estudio",
-          "etiqueta": "moderadas"
-        },
-        {
-          "variable": "motivacion_estres",
-          "etiqueta": "medio"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R09",
-      "descripcion": "Si promedio_academico es bajo Y inasistencia es media ENTONCES riesgo es medio",
-      "antecedentes": [
-        {
-          "variable": "promedio_academico",
-          "etiqueta": "bajo"
-        },
-        {
-          "variable": "inasistencia",
-          "etiqueta": "media"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R10",
-      "descripcion": "Si inasistencia es alta Y horas_estudio es pocas ENTONCES riesgo es alto",
-      "antecedentes": [
-        {
-          "variable": "inasistencia",
-          "etiqueta": "alta"
-        },
-        {
-          "variable": "horas_estudio",
-          "etiqueta": "pocas"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "alto"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R11",
-      "descripcion": "Si promedio_academico es medio Y horas_estudio es pocas ENTONCES riesgo es medio",
-      "antecedentes": [
-        {
-          "variable": "promedio_academico",
-          "etiqueta": "medio"
-        },
-        {
-          "variable": "horas_estudio",
-          "etiqueta": "pocas"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R12",
-      "descripcion": "Si motivacion_estres es bajo Y inasistencia es alta ENTONCES riesgo es alto",
-      "antecedentes": [
-        {
-          "variable": "motivacion_estres",
-          "etiqueta": "bajo"
-        },
-        {
-          "variable": "inasistencia",
-          "etiqueta": "alta"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo",
-        "etiqueta": "alto"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     }
   ]
 }

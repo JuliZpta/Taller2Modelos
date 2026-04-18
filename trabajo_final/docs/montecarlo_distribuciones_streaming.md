@@ -19,15 +19,15 @@ Este documento describe las distribuciones estadísticas utilizadas para muestre
 
 | Estadístico | Valor |
 |---|---|
-| Media del riesgo QoS | 39.5794 |
-| Desviación estándar | 17.2030 |
-| Mínimo | 15.5556 |
-| Percentil 25 (P25) | 23.8832 |
-| Mediana (P50) | 42.2622 |
-| Percentil 75 (P75) | 50.0000 |
-| Percentil 95 (P95) | 70.8236 |
-| Máximo | 84.4444 |
-| P(riesgo_qos ≥ 70) | 0.0534 (5.3%) |
+| Media del riesgo QoS | 36.5823 |
+| Desviación estándar | 16.1409 |
+| Mínimo | 17.0513 |
+| Percentil 25 (P25) | 20.4621 |
+| Mediana (P50) | 34.7029 |
+| Percentil 75 (P75) | 47.6349 |
+| Percentil 95 (P95) | 63.8628 |
+| Máximo | 91.5635 |
+| P(riesgo_qos ≥ 70) | 0.0290 (2.9%) |
 
 ## Notas Metodológicas
 

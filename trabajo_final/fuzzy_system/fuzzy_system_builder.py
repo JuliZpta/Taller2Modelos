@@ -23,14 +23,13 @@ import os
 from datetime import datetime, timezone
 
 import matplotlib
-matplotlib.use("Agg")  # backend no interactivo
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
 logger = logging.getLogger(__name__)
-
 
 # ---------------------------------------------------------------------------
 # Universos de discurso
@@ -69,150 +68,64 @@ _MEMBERSHIP_DEFS: dict[str, list[tuple[str, str, list[float]]]] = {
         ("media", "triangular",  [40.0, 60.0, 80.0]),
         ("alta",  "trapezoidal", [70.0, 85.0, 100.0, 100.0]),
     ],
+    # Funciones de salida con solapamiento máximo para distribución continua
+    # Los centroides individuales están separados pero las MFs se solapan ampliamente
     "riesgo_qos": [
-        ("bajo",  "trapezoidal", [0.0, 0.0, 20.0, 40.0]),
-        ("medio", "triangular",  [30.0, 50.0, 70.0]),
-        ("alto",  "trapezoidal", [60.0, 80.0, 100.0, 100.0]),
+        ("muy_bajo", "trapezoidal", [0.0,  0.0,  20.0, 45.0]),   # centroide ~18
+        ("bajo",     "triangular",  [30.0, 48.0, 65.0]),          # centroide ~48
+        ("medio",    "triangular",  [52.0, 63.0, 76.0]),          # centroide ~64
+        ("alto",     "triangular",  [65.0, 76.0, 88.0]),          # centroide ~76
+        ("muy_alto", "trapezoidal", [80.0, 90.0, 100.0, 100.0]), # centroide ~93
     ],
 }
 
 # ---------------------------------------------------------------------------
-# Reglas Mamdani (12 reglas)
+# 27 reglas con cobertura completa del espacio de entrada
 # ---------------------------------------------------------------------------
+
+_REGLAS_COMPACTAS_ST = [
+    # usuarios=alto (riesgo alto/muy_alto)
+    ("R01", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","alto"), ("latencia_red","alta")], "muy_alto"),
+    ("R02", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","alto"), ("capacidad_servidor","alta")], "muy_alto"),
+    ("R03", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","alto"), ("latencia_red","media")], "alto"),
+    ("R04", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","medio"), ("latencia_red","alta")], "alto"),
+    ("R05", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","medio"), ("capacidad_servidor","alta")], "alto"),
+    ("R06", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","bajo"), ("latencia_red","alta")], "alto"),
+    ("R07", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","medio"), ("latencia_red","media")], "medio"),
+    ("R08", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","bajo"), ("latencia_red","media")], "medio"),
+    ("R09", [("usuarios_concurrentes","alto"), ("uso_ancho_banda","bajo"), ("latencia_red","baja")], "bajo"),
+    # usuarios=medio (riesgo medio/bajo)
+    ("R10", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","alto"), ("latencia_red","alta")], "alto"),
+    ("R11", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","alto"), ("capacidad_servidor","alta")], "alto"),
+    ("R12", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","alto"), ("latencia_red","media")], "medio"),
+    ("R13", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","medio"), ("latencia_red","alta")], "medio"),
+    ("R14", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","medio"), ("capacidad_servidor","alta")], "medio"),
+    ("R15", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","medio"), ("latencia_red","media")], "bajo"),
+    ("R16", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","bajo"), ("latencia_red","alta")], "medio"),
+    ("R17", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","bajo"), ("capacidad_servidor","baja")], "bajo"),
+    ("R18", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","bajo"), ("latencia_red","media")], "muy_bajo"),
+    ("R19", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","bajo"), ("latencia_red","baja")], "muy_bajo"),
+    ("R20", [("usuarios_concurrentes","medio"), ("uso_ancho_banda","medio"), ("latencia_red","baja")], "bajo"),
+    # usuarios=bajo (riesgo bajo/muy_bajo)
+    ("R21", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","alto"), ("latencia_red","alta")], "medio"),
+    ("R22", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","alto"), ("latencia_red","media")], "bajo"),
+    ("R23", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","medio"), ("latencia_red","alta")], "bajo"),
+    ("R24", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","medio"), ("latencia_red","media")], "muy_bajo"),
+    ("R25", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","bajo"), ("latencia_red","alta")], "muy_bajo"),
+    ("R26", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","bajo"), ("latencia_red","media")], "muy_bajo"),
+    ("R27", [("usuarios_concurrentes","bajo"), ("uso_ancho_banda","bajo"), ("latencia_red","baja")], "muy_bajo"),
+]
 
 _RULES_DEF: list[dict] = [
     {
-        "id": "R01",
-        "descripcion": "SI usuarios_concurrentes=alto Y uso_ancho_banda=alto → riesgo_qos=alto",
-        "antecedentes": [
-            {"variable": "usuarios_concurrentes", "etiqueta": "alto"},
-            {"variable": "uso_ancho_banda",        "etiqueta": "alto"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "alto"},
+        "id": rid,
+        "descripcion": f"{' AND '.join(f'{v}={e}' for v, e in ants)} → riesgo_qos={cons}",
+        "antecedentes": [{"variable": v, "etiqueta": e} for v, e in ants],
+        "consecuente": {"variable": "riesgo_qos", "etiqueta": cons},
         "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R02",
-        "descripcion": "SI latencia_red=alta Y capacidad_servidor=alta → riesgo_qos=alto",
-        "antecedentes": [
-            {"variable": "latencia_red",       "etiqueta": "alta"},
-            {"variable": "capacidad_servidor", "etiqueta": "alta"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "alto"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R03",
-        "descripcion": "SI uso_ancho_banda=alto Y latencia_red=alta → riesgo_qos=alto",
-        "antecedentes": [
-            {"variable": "uso_ancho_banda", "etiqueta": "alto"},
-            {"variable": "latencia_red",    "etiqueta": "alta"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "alto"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R04",
-        "descripcion": "SI usuarios_concurrentes=bajo Y uso_ancho_banda=bajo → riesgo_qos=bajo",
-        "antecedentes": [
-            {"variable": "usuarios_concurrentes", "etiqueta": "bajo"},
-            {"variable": "uso_ancho_banda",        "etiqueta": "bajo"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "bajo"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R05",
-        "descripcion": "SI capacidad_servidor=baja Y latencia_red=baja → riesgo_qos=bajo",
-        "antecedentes": [
-            {"variable": "capacidad_servidor", "etiqueta": "baja"},
-            {"variable": "latencia_red",       "etiqueta": "baja"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "bajo"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R06",
-        "descripcion": "SI usuarios_concurrentes=bajo Y latencia_red=baja → riesgo_qos=bajo",
-        "antecedentes": [
-            {"variable": "usuarios_concurrentes", "etiqueta": "bajo"},
-            {"variable": "latencia_red",          "etiqueta": "baja"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "bajo"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R07",
-        "descripcion": "SI usuarios_concurrentes=medio Y uso_ancho_banda=medio → riesgo_qos=medio",
-        "antecedentes": [
-            {"variable": "usuarios_concurrentes", "etiqueta": "medio"},
-            {"variable": "uso_ancho_banda",        "etiqueta": "medio"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "medio"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R08",
-        "descripcion": "SI latencia_red=media Y capacidad_servidor=media → riesgo_qos=medio",
-        "antecedentes": [
-            {"variable": "latencia_red",       "etiqueta": "media"},
-            {"variable": "capacidad_servidor", "etiqueta": "media"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "medio"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R09",
-        "descripcion": "SI uso_ancho_banda=medio Y capacidad_servidor=media → riesgo_qos=medio",
-        "antecedentes": [
-            {"variable": "uso_ancho_banda",    "etiqueta": "medio"},
-            {"variable": "capacidad_servidor", "etiqueta": "media"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "medio"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R10",
-        "descripcion": "SI usuarios_concurrentes=alto Y capacidad_servidor=alta → riesgo_qos=alto",
-        "antecedentes": [
-            {"variable": "usuarios_concurrentes", "etiqueta": "alto"},
-            {"variable": "capacidad_servidor",    "etiqueta": "alta"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "alto"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R11",
-        "descripcion": "SI uso_ancho_banda=alto Y capacidad_servidor=media → riesgo_qos=medio",
-        "antecedentes": [
-            {"variable": "uso_ancho_banda",    "etiqueta": "alto"},
-            {"variable": "capacidad_servidor", "etiqueta": "media"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "medio"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
-    {
-        "id": "R12",
-        "descripcion": "SI latencia_red=alta Y usuarios_concurrentes=medio → riesgo_qos=medio",
-        "antecedentes": [
-            {"variable": "latencia_red",          "etiqueta": "alta"},
-            {"variable": "usuarios_concurrentes", "etiqueta": "medio"},
-        ],
-        "consecuente": {"variable": "riesgo_qos", "etiqueta": "medio"},
-        "operador": "AND",
-        "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3",
-    },
+        "origen_delphi": "Consenso E1-E4 Ronda 3",
+    }
+    for rid, ants, cons in _REGLAS_COMPACTAS_ST
 ]
 
 # Variables de entrada esperadas (deben coincidir con variables_aprobadas del consenso)
@@ -243,25 +156,6 @@ class FuzzySystemBuilder:
         data_dir: str = "trabajo_final/data/",
         docs_dir: str = "trabajo_final/docs/",
     ) -> None:
-        """
-        Inicializa el builder cargando el consenso Delphi.
-
-        Parameters
-        ----------
-        consenso_path : str
-            Ruta al archivo delphi_consenso.json.
-        data_dir : str
-            Directorio de datos de salida.
-        docs_dir : str
-            Directorio de documentación de salida.
-
-        Raises
-        ------
-        FileNotFoundError
-            Si consenso_path no existe.
-        ValueError
-            Si las variables aprobadas no coinciden con las variables esperadas.
-        """
         if not os.path.exists(consenso_path):
             raise FileNotFoundError(
                 f"No se encontró el archivo de consenso Delphi: '{consenso_path}'. "
@@ -271,7 +165,6 @@ class FuzzySystemBuilder:
         with open(consenso_path, encoding="utf-8") as f:
             self._consenso = json.load(f)
 
-        # Verificar que las variables aprobadas coinciden con las esperadas
         aprobadas = {
             v["factor"] for v in self._consenso.get("variables_aprobadas", [])
         }
@@ -293,7 +186,6 @@ class FuzzySystemBuilder:
         os.makedirs(data_dir, exist_ok=True)
         os.makedirs(docs_dir, exist_ok=True)
 
-        # Atributos que se populan en build()
         self._antecedentes: dict[str, ctrl.Antecedent] = {}
         self._consecuente: ctrl.Consequent | None = None
         self._rules: list[ctrl.Rule] = []
@@ -305,10 +197,6 @@ class FuzzySystemBuilder:
     # ------------------------------------------------------------------
 
     def build(self) -> None:
-        """
-        Orquesta la construcción completa del sistema difuso:
-        funciones de pertenencia → reglas → persistencia → gráficas.
-        """
         self._build_membership_functions()
         self._build_rules()
         self._persist_variables()
@@ -317,26 +205,11 @@ class FuzzySystemBuilder:
         self._built = True
 
     def evaluar_riesgo(self, valores_entrada: dict) -> float:
-        """
-        Evalúa el riesgo QoS dado un conjunto de valores de entrada.
-
-        Parameters
-        ----------
-        valores_entrada : dict
-            Diccionario con claves = nombres de variables de entrada y
-            valores = valores numéricos.
-
-        Returns
-        -------
-        float
-            Valor de riesgo_qos en [0.0, 100.0].
-        """
         if not self._built:
             raise RuntimeError(
                 "El sistema difuso no ha sido construido. Llame a build() primero."
             )
 
-        # Recortar valores fuera del universo
         valores_recortados: dict[str, float] = {}
         for var_name, valor in valores_entrada.items():
             if var_name not in UNIVERSES:
@@ -345,7 +218,6 @@ class FuzzySystemBuilder:
             valor_float = float(np.clip(float(valor), lo, hi))
             valores_recortados[var_name] = valor_float
 
-        # Ejecutar simulación
         try:
             sim = ctrl.ControlSystemSimulation(self._control_system)
             for var_name, valor in valores_recortados.items():
@@ -353,36 +225,26 @@ class FuzzySystemBuilder:
                     sim.input[var_name] = valor
             sim.compute()
             if "riesgo_qos" not in sim.output:
-                # No rules fired — compute centroid manually from partial activations
                 return self._fallback_centroid(valores_recortados)
             resultado = float(np.clip(sim.output["riesgo_qos"], 0.0, 100.0))
             return resultado
         except KeyError:
-            # Output variable not activated — use manual centroid fallback
             return self._fallback_centroid(valores_recortados)
         except Exception as exc:
-            logger.warning("Error en motor difuso: %s. Fallback=50.0", exc)
-            return 50.0
+            logger.warning("Error en motor difuso: %s. Usando fallback.", exc)
+            return self._fallback_centroid(valores_recortados)
 
     def _fallback_centroid(self, valores: dict) -> float:
-        """
-        Calcula el centroide manualmente cuando ninguna regla activa la salida.
-        Evalúa el grado de pertenencia de cada variable a sus etiquetas y
-        pondera las etiquetas de salida correspondientes.
-        """
         lo, hi, step = UNIVERSES["riesgo_qos"]
         universe_out = np.arange(lo, hi + step, step)
 
-        # Mapeo de etiquetas de entrada a etiquetas de salida
-        # Basado en las reglas: bajo→bajo, medio→medio, alto→alto
         label_map = {
-            "bajo": "bajo", "baja": "bajo",
+            "bajo": "bajo", "baja": "muy_bajo",
             "medio": "medio", "media": "medio",
             "alto": "alto", "alta": "alto",
         }
 
-        # Acumular activaciones por etiqueta de salida
-        output_activations = {"bajo": 0.0, "medio": 0.0, "alto": 0.0}
+        output_activations = {k: 0.0 for k in ["muy_bajo", "bajo", "medio", "alto", "muy_alto"]}
 
         for var_name, valor in valores.items():
             if var_name == "riesgo_qos" or var_name not in UNIVERSES:
@@ -390,29 +252,23 @@ class FuzzySystemBuilder:
             lo_v, hi_v, step_v = UNIVERSES[var_name]
             universe_v = np.arange(lo_v, hi_v + step_v, step_v)
             for etiqueta, tipo, params in _MEMBERSHIP_DEFS[var_name]:
-                if tipo == "triangular":
-                    mf = fuzz.trimf(universe_v, params)
-                elif tipo == "trapezoidal":
-                    mf = fuzz.trapmf(universe_v, params)
-                else:
-                    continue
+                mf = (
+                    fuzz.trimf(universe_v, params) if tipo == "triangular"
+                    else fuzz.trapmf(universe_v, params)
+                )
                 activation = float(fuzz.interp_membership(universe_v, mf, valor))
                 out_label = label_map.get(etiqueta, "medio")
                 output_activations[out_label] = max(output_activations[out_label], activation)
 
-        # Construir función de salida agregada
         aggregated = np.zeros_like(universe_out)
         for etiqueta, tipo, params in _MEMBERSHIP_DEFS["riesgo_qos"]:
-            if tipo == "triangular":
-                mf = fuzz.trimf(universe_out, params)
-            elif tipo == "trapezoidal":
-                mf = fuzz.trapmf(universe_out, params)
-            else:
-                continue
+            mf = (
+                fuzz.trimf(universe_out, params) if tipo == "triangular"
+                else fuzz.trapmf(universe_out, params)
+            )
             activation = output_activations.get(etiqueta, 0.0)
             aggregated = np.fmax(aggregated, np.fmin(activation, mf))
 
-        # Defuzzificar con centroide
         if aggregated.sum() == 0:
             return 50.0
         resultado = float(fuzz.defuzz(universe_out, aggregated, "centroid"))
@@ -423,7 +279,6 @@ class FuzzySystemBuilder:
     # ------------------------------------------------------------------
 
     def _build_membership_functions(self) -> None:
-        """Construye antecedentes y consecuente con funciones de pertenencia."""
         input_vars = [v for v in UNIVERSES if v != "riesgo_qos"]
 
         for var_name in input_vars:
@@ -432,19 +287,13 @@ class FuzzySystemBuilder:
             antecedente = ctrl.Antecedent(universe, var_name)
 
             for etiqueta, tipo, params in _MEMBERSHIP_DEFS[var_name]:
-                if tipo == "triangular":
-                    antecedente[etiqueta] = fuzz.trimf(universe, params)
-                elif tipo == "trapezoidal":
-                    antecedente[etiqueta] = fuzz.trapmf(universe, params)
-                else:
-                    raise ValueError(
-                        f"Tipo de función de pertenencia no soportado: '{tipo}' "
-                        f"para variable '{var_name}', etiqueta '{etiqueta}'."
-                    )
+                antecedente[etiqueta] = (
+                    fuzz.trimf(universe, params) if tipo == "triangular"
+                    else fuzz.trapmf(universe, params)
+                )
 
             self._antecedentes[var_name] = antecedente
 
-        # Consecuente: riesgo_qos
         lo, hi, step = UNIVERSES["riesgo_qos"]
         universe_riesgo = np.arange(lo, hi + step, step)
         self._consecuente = ctrl.Consequent(
@@ -452,36 +301,24 @@ class FuzzySystemBuilder:
         )
 
         for etiqueta, tipo, params in _MEMBERSHIP_DEFS["riesgo_qos"]:
-            if tipo == "triangular":
-                self._consecuente[etiqueta] = fuzz.trimf(universe_riesgo, params)
-            elif tipo == "trapezoidal":
-                self._consecuente[etiqueta] = fuzz.trapmf(universe_riesgo, params)
-            else:
-                raise ValueError(
-                    f"Tipo de función de pertenencia no soportado: '{tipo}' "
-                    f"para variable 'riesgo_qos', etiqueta '{etiqueta}'."
-                )
+            self._consecuente[etiqueta] = (
+                fuzz.trimf(universe_riesgo, params) if tipo == "triangular"
+                else fuzz.trapmf(universe_riesgo, params)
+            )
 
     def _build_rules(self) -> None:
-        """Construye las 12 reglas Mamdani con skfuzzy.control."""
         self._rules = []
 
         for rule_def in _RULES_DEF:
-            antecedentes = rule_def["antecedentes"]
-            consecuente_def = rule_def["consecuente"]
-
-            # Construir antecedente compuesto (AND)
-            ant_terms = []
-            for ant in antecedentes:
-                var_name = ant["variable"]
-                etiqueta = ant["etiqueta"]
-                ant_terms.append(self._antecedentes[var_name][etiqueta])
-
+            ant_terms = [
+                self._antecedentes[a["variable"]][a["etiqueta"]]
+                for a in rule_def["antecedentes"]
+            ]
             antecedente_compuesto = ant_terms[0]
             for term in ant_terms[1:]:
                 antecedente_compuesto = antecedente_compuesto & term
 
-            consecuente = self._consecuente[consecuente_def["etiqueta"]]
+            consecuente = self._consecuente[rule_def["consecuente"]["etiqueta"]]
             rule = ctrl.Rule(antecedente_compuesto, consecuente, label=rule_def["id"])
             self._rules.append(rule)
 
@@ -492,7 +329,6 @@ class FuzzySystemBuilder:
     # ------------------------------------------------------------------
 
     def _persist_variables(self) -> None:
-        """Guarda data/fuzzy_variables.json."""
         input_vars = [v for v in UNIVERSES if v != "riesgo_qos"]
 
         variables_entrada = []
@@ -532,14 +368,12 @@ class FuzzySystemBuilder:
             json.dump(doc, f, ensure_ascii=False, indent=2)
 
     def _persist_rules(self) -> None:
-        """Guarda data/fuzzy_rules.json."""
         doc = {"reglas": _RULES_DEF}
         output_path = os.path.join(self._data_dir, "fuzzy_rules.json")
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(doc, f, ensure_ascii=False, indent=2)
 
     def _plot_membership_functions(self) -> None:
-        """Genera una imagen PNG por variable en docs/fuzzy_membership_plots/."""
         plots_dir = os.path.join(self._docs_dir, "fuzzy_membership_plots")
         os.makedirs(plots_dir, exist_ok=True)
 
@@ -558,12 +392,10 @@ class FuzzySystemBuilder:
             fig, ax = plt.subplots(figsize=(8, 4))
 
             for etiqueta, tipo, params in _MEMBERSHIP_DEFS[var_name]:
-                if tipo == "triangular":
-                    mf = fuzz.trimf(universe, params)
-                elif tipo == "trapezoidal":
-                    mf = fuzz.trapmf(universe, params)
-                else:
-                    continue
+                mf = (
+                    fuzz.trimf(universe, params) if tipo == "triangular"
+                    else fuzz.trapmf(universe, params)
+                )
                 ax.plot(universe, mf, label=etiqueta, linewidth=2)
 
             xlabel = var_labels.get(var_name, var_name)

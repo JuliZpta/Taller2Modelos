@@ -2,7 +2,7 @@
   "reglas": [
     {
       "id": "R01",
-      "descripcion": "SI usuarios_concurrentes=alto Y uso_ancho_banda=alto → riesgo_qos=alto",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=alto AND latencia_red=alta → riesgo_qos=muy_alto",
       "antecedentes": [
         {
           "variable": "usuarios_concurrentes",
@@ -11,22 +11,30 @@
         {
           "variable": "uso_ancho_banda",
           "etiqueta": "alto"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
         }
       ],
       "consecuente": {
         "variable": "riesgo_qos",
-        "etiqueta": "alto"
+        "etiqueta": "muy_alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R02",
-      "descripcion": "SI latencia_red=alta Y capacidad_servidor=alta → riesgo_qos=alto",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=alto AND capacidad_servidor=alta → riesgo_qos=muy_alto",
       "antecedentes": [
         {
-          "variable": "latencia_red",
-          "etiqueta": "alta"
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "alto"
         },
         {
           "variable": "capacidad_servidor",
@@ -35,22 +43,26 @@
       ],
       "consecuente": {
         "variable": "riesgo_qos",
-        "etiqueta": "alto"
+        "etiqueta": "muy_alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R03",
-      "descripcion": "SI uso_ancho_banda=alto Y latencia_red=alta → riesgo_qos=alto",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=alto AND latencia_red=media → riesgo_qos=alto",
       "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
+        },
         {
           "variable": "uso_ancho_banda",
           "etiqueta": "alto"
         },
         {
           "variable": "latencia_red",
-          "etiqueta": "alta"
+          "etiqueta": "media"
         }
       ],
       "consecuente": {
@@ -58,54 +70,138 @@
         "etiqueta": "alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R04",
-      "descripcion": "SI usuarios_concurrentes=bajo Y uso_ancho_banda=bajo → riesgo_qos=bajo",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=medio AND latencia_red=alta → riesgo_qos=alto",
       "antecedentes": [
         {
           "variable": "usuarios_concurrentes",
-          "etiqueta": "bajo"
+          "etiqueta": "alto"
         },
         {
           "variable": "uso_ancho_banda",
-          "etiqueta": "bajo"
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
         }
       ],
       "consecuente": {
         "variable": "riesgo_qos",
-        "etiqueta": "bajo"
+        "etiqueta": "alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R05",
-      "descripcion": "SI capacidad_servidor=baja Y latencia_red=baja → riesgo_qos=bajo",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=medio AND capacidad_servidor=alta → riesgo_qos=alto",
       "antecedentes": [
         {
-          "variable": "capacidad_servidor",
-          "etiqueta": "baja"
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
         },
         {
-          "variable": "latencia_red",
-          "etiqueta": "baja"
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "capacidad_servidor",
+          "etiqueta": "alta"
         }
       ],
       "consecuente": {
         "variable": "riesgo_qos",
-        "etiqueta": "bajo"
+        "etiqueta": "alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R06",
-      "descripcion": "SI usuarios_concurrentes=bajo Y latencia_red=baja → riesgo_qos=bajo",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=bajo AND latencia_red=alta → riesgo_qos=alto",
       "antecedentes": [
         {
           "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R07",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=medio AND latencia_red=media → riesgo_qos=medio",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R08",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=bajo AND latencia_red=media → riesgo_qos=medio",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R09",
+      "descripcion": "usuarios_concurrentes=alto AND uso_ancho_banda=bajo AND latencia_red=baja → riesgo_qos=bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "uso_ancho_banda",
           "etiqueta": "bajo"
         },
         {
@@ -118,74 +214,42 @@
         "etiqueta": "bajo"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R07",
-      "descripcion": "SI usuarios_concurrentes=medio Y uso_ancho_banda=medio → riesgo_qos=medio",
-      "antecedentes": [
-        {
-          "variable": "usuarios_concurrentes",
-          "etiqueta": "medio"
-        },
-        {
-          "variable": "uso_ancho_banda",
-          "etiqueta": "medio"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo_qos",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R08",
-      "descripcion": "SI latencia_red=media Y capacidad_servidor=media → riesgo_qos=medio",
-      "antecedentes": [
-        {
-          "variable": "latencia_red",
-          "etiqueta": "media"
-        },
-        {
-          "variable": "capacidad_servidor",
-          "etiqueta": "media"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo_qos",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
-    },
-    {
-      "id": "R09",
-      "descripcion": "SI uso_ancho_banda=medio Y capacidad_servidor=media → riesgo_qos=medio",
-      "antecedentes": [
-        {
-          "variable": "uso_ancho_banda",
-          "etiqueta": "medio"
-        },
-        {
-          "variable": "capacidad_servidor",
-          "etiqueta": "media"
-        }
-      ],
-      "consecuente": {
-        "variable": "riesgo_qos",
-        "etiqueta": "medio"
-      },
-      "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
       "id": "R10",
-      "descripcion": "SI usuarios_concurrentes=alto Y capacidad_servidor=alta → riesgo_qos=alto",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=alto AND latencia_red=alta → riesgo_qos=alto",
       "antecedentes": [
         {
           "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "alto"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R11",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=alto AND capacidad_servidor=alta → riesgo_qos=alto",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
           "etiqueta": "alto"
         },
         {
@@ -198,18 +262,22 @@
         "etiqueta": "alto"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
-      "id": "R11",
-      "descripcion": "SI uso_ancho_banda=alto Y capacidad_servidor=media → riesgo_qos=medio",
+      "id": "R12",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=alto AND latencia_red=media → riesgo_qos=medio",
       "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
         {
           "variable": "uso_ancho_banda",
           "etiqueta": "alto"
         },
         {
-          "variable": "capacidad_servidor",
+          "variable": "latencia_red",
           "etiqueta": "media"
         }
       ],
@@ -218,19 +286,23 @@
         "etiqueta": "medio"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     },
     {
-      "id": "R12",
-      "descripcion": "SI latencia_red=alta Y usuarios_concurrentes=medio → riesgo_qos=medio",
+      "id": "R13",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=medio AND latencia_red=alta → riesgo_qos=medio",
       "antecedentes": [
-        {
-          "variable": "latencia_red",
-          "etiqueta": "alta"
-        },
         {
           "variable": "usuarios_concurrentes",
           "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
         }
       ],
       "consecuente": {
@@ -238,7 +310,343 @@
         "etiqueta": "medio"
       },
       "operador": "AND",
-      "origen_delphi": "Consenso expertos E1, E2, E3, E4 — Ronda 3"
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R14",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=medio AND capacidad_servidor=alta → riesgo_qos=medio",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "capacidad_servidor",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R15",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=medio AND latencia_red=media → riesgo_qos=bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R16",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=bajo AND latencia_red=alta → riesgo_qos=medio",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R17",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=bajo AND capacidad_servidor=baja → riesgo_qos=bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "capacidad_servidor",
+          "etiqueta": "baja"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R18",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=bajo AND latencia_red=media → riesgo_qos=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R19",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=bajo AND latencia_red=baja → riesgo_qos=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "baja"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R20",
+      "descripcion": "usuarios_concurrentes=medio AND uso_ancho_banda=medio AND latencia_red=baja → riesgo_qos=bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "baja"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R21",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=alto AND latencia_red=alta → riesgo_qos=medio",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "medio"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R22",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=alto AND latencia_red=media → riesgo_qos=bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "alto"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R23",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=medio AND latencia_red=alta → riesgo_qos=bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R24",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=medio AND latencia_red=media → riesgo_qos=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "medio"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R25",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=bajo AND latencia_red=alta → riesgo_qos=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "alta"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R26",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=bajo AND latencia_red=media → riesgo_qos=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "media"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
+    },
+    {
+      "id": "R27",
+      "descripcion": "usuarios_concurrentes=bajo AND uso_ancho_banda=bajo AND latencia_red=baja → riesgo_qos=muy_bajo",
+      "antecedentes": [
+        {
+          "variable": "usuarios_concurrentes",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "uso_ancho_banda",
+          "etiqueta": "bajo"
+        },
+        {
+          "variable": "latencia_red",
+          "etiqueta": "baja"
+        }
+      ],
+      "consecuente": {
+        "variable": "riesgo_qos",
+        "etiqueta": "muy_bajo"
+      },
+      "operador": "AND",
+      "origen_delphi": "Consenso E1-E4 Ronda 3"
     }
   ]
 }
