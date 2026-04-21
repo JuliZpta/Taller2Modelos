@@ -19,15 +19,15 @@ Este documento describe las distribuciones estadísticas utilizadas para muestre
 
 | Estadístico | Valor |
 |---|---|
-| Media del riesgo | 54.6393 |
-| Desviación estándar | 22.9978 |
+| Media del riesgo | 54.2630 |
+| Desviación estándar | 22.4219 |
 | Mínimo | 7.4286 |
-| Percentil 25 (P25) | 38.3810 |
-| Mediana (P50) | 48.6096 |
-| Percentil 75 (P75) | 69.3286 |
+| Percentil 25 (P25) | 40.4463 |
+| Mediana (P50) | 47.4805 |
+| Percentil 75 (P75) | 69.3093 |
 | Percentil 95 (P95) | 90.1842 |
 | Máximo | 90.1842 |
-| P(riesgo ≥ 70) | 0.2416 (24.2%) |
+| P(riesgo ≥ 70) | 0.2240 (22.4%) |
 
 ## Notas Metodológicas
 

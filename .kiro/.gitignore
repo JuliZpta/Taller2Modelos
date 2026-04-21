@@ -1,0 +1,7 @@
+# Kiro settings (may contain sensitive info like API keys)
+settings/
+
+# Kiro cache and temporary files
+cache/
+*.tmp
+*.log
