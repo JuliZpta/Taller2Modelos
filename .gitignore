@@ -1,5 +1,5 @@
 # Kiro settings (may contain sensitive info like API keys)
-settings/
+.kiro/
 
 # Kiro cache and temporary files
 cache/
