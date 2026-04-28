@@ -10,11 +10,12 @@ Este documento compara el enfoque de inferencia difusa Mamdani con modelos estad
 
 | Modelo | MAE | RMSE | R² |
 |--------|-----|------|-----|
-| KNN (k=5) | 7.5071 | 10.9894 | 0.3102 |
-| Random Forest ✓ | 2.4183 | 5.2906 | 0.8401 |
-| Decision Tree | 2.9258 | 6.3978 | 0.7662 |
+| KNN (k=5) | 10.7976 | 13.7779 | 0.5814 |
+| Random Forest ✓ | 1.8447 | 3.3867 | 0.9747 |
+| Decision Tree | 2.3299 | 5.3156 | 0.9377 |
+| SVR (RBF) | 4.8029 | 6.5474 | 0.9055 |
 
-> **Mejor modelo:** Random Forest (R² = 0.8401)
+> **Mejor modelo:** Random Forest (R² = 0.9747)
 
 ---
 
@@ -22,7 +23,7 @@ Este documento compara el enfoque de inferencia difusa Mamdani con modelos estad
 
 La correlación de Pearson entre las predicciones del mejor modelo (**Random Forest**) y los valores difusos reales del conjunto de prueba es:
 
-**r = 0.9186**
+**r = 0.9877**
 
 Esto indica una **correlación muy alta** entre el modelo estadístico y el sistema de inferencia difusa, lo que sugiere que ambos enfoques capturan patrones similares en los datos.
 
@@ -34,21 +35,21 @@ Esto indica una **correlación muy alta** entre el modelo estadístico y el sist
 
 | Variable | Importancia |
 |----------|-------------|
-| promedio_academico | 0.458938 (45.89%) |
-| horas_estudio | 0.245721 (24.57%) |
-| motivacion_estres | 0.158494 (15.85%) |
-| inasistencia | 0.136846 (13.68%) |
+| inasistencia | 0.500071 (50.01%) |
+| promedio_academico | 0.410443 (41.04%) |
+| horas_estudio | 0.049167 (4.92%) |
+| motivacion_estres | 0.040319 (4.03%) |
 
 ### Decision Tree
 
 | Variable | Importancia |
 |----------|-------------|
-| promedio_academico | 0.449230 (44.92%) |
-| horas_estudio | 0.254630 (25.46%) |
-| motivacion_estres | 0.149516 (14.95%) |
-| inasistencia | 0.146625 (14.66%) |
+| inasistencia | 0.489572 (48.96%) |
+| promedio_academico | 0.422477 (42.25%) |
+| horas_estudio | 0.048340 (4.83%) |
+| motivacion_estres | 0.039611 (3.96%) |
 
-**Interpretación:** En Random Forest, la variable más influyente es `promedio_academico`. En Decision Tree, la variable más influyente es `promedio_academico`. La consistencia entre ambos modelos en el ranking de importancias refuerza la validez de los factores priorizados en el proceso Delphi.
+**Interpretación:** En Random Forest, la variable más influyente es `inasistencia`. En Decision Tree, la variable más influyente es `inasistencia`. La consistencia entre ambos modelos en el ranking de importancias refuerza la validez de los factores priorizados en el proceso Delphi.
 
 ---
 
@@ -67,7 +68,7 @@ La siguiente tabla vincula cada Variable_Entrada del modelo de regresión con su
 
 ## 5. Conclusión: Consistencia Difuso vs. Estadístico
 
-El análisis comparativo muestra que los modelos estadísticos de regresión logran un R² de hasta **0.8401** al predecir el índice de riesgo generado por el sistema difuso Mamdani. La correlación de Pearson de **0.9186** confirma una correlación muy alta entre ambos enfoques.
+El análisis comparativo muestra que los modelos estadísticos de regresión logran un R² de hasta **0.9747** al predecir el índice de riesgo generado por el sistema difuso Mamdani. La correlación de Pearson de **0.9877** confirma una correlación muy alta entre ambos enfoques.
 
 Las variables priorizadas por el proceso Delphi (`promedio_academico`, `inasistencia`, `horas_estudio`, `motivacion_estres`) son consistentes con las importancias identificadas por los modelos estadísticos, lo que valida la coherencia metodológica del sistema.
 

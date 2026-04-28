@@ -231,13 +231,16 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 
 | Modelo | MAE | RMSE | R² |
 |---|---|---|---|
-| KNN (k=5) | ~7.5 | ~11.0 | ~0.31 |
-| Decision Tree | ~2.9 | ~6.4 | ~0.77 |
-| **Random Forest** | **~2.4** | **~5.3** | **~0.84** |
+| KNN (k=5) | 10.80 | 13.78 | 0.58 |
+| SVR (RBF) | 4.80 | 6.55 | 0.91 |
+| Decision Tree | 2.33 | 5.32 | 0.94 |
+| **Random Forest** | **1.84** | **3.39** | **0.97** |
+
+> **Nota:** Se añadió SVR (Support Vector Regression con kernel RBF) como modelo de prueba adicional. Random Forest mantiene el mejor desempeño con R² = 0.97.
 
 ### Correlación de Pearson
 
-**r ≈ 0.92** — correlación muy alta entre Random Forest y sistema difuso.
+**r ≈ 0.99** — correlación muy alta entre Random Forest y sistema difuso.
 
 ### Importancia de Variables (Random Forest)
 
@@ -257,7 +260,7 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 | **Delphi** | 4/4 variables aprobadas · 100% consenso · CV < 0.12 |
 | **Sistema Difuso** | 27 reglas · 5 niveles · Riesgo muy alto ≈ 82 · Muy bajo ≈ 16 |
 | **Montecarlo** | Distribución uniforme · P(riesgo ≥ 70) ≈ 30% con entradas uniformes |
-| **Regresión** | Random Forest R² ≈ 0.84 · Pearson r ≈ 0.92 · Variable clave: promedio |
+| **Regresión** | Random Forest R² = 0.97 · Pearson r = 0.99 · 4 modelos evaluados (KNN, SVR, DT, RF) |
 
 ---
 
@@ -279,9 +282,9 @@ Simulación Montecarlo (distribuciones uniformes, N iteraciones)
     ├─► base_simulada.csv
     │
     ▼
-Regresión (KNN / Random Forest / Decision Tree)
+Regresión (KNN / SVR / Random Forest / Decision Tree)
     │
-    └─► R² ≈ 0.84 · Pearson r ≈ 0.92
+    └─► R² = 0.97 · Pearson r = 0.99
 ```
 
 **Principio central:** Ninguna variable, etiqueta, rango ni regla fue inventada. Todo se deriva del consenso del panel de expertos.
@@ -296,7 +299,7 @@ Regresión (KNN / Random Forest / Decision Tree)
 
 3. **La simulación Montecarlo explora todo el espacio de estados** — con distribuciones uniformes, el histograma refleja el comportamiento real del sistema difuso sin sesgos.
 
-4. **El Random Forest valida la coherencia del sistema difuso** — R² ≈ 0.84 y r ≈ 0.92 confirman que el sistema difuso es estadísticamente consistente.
+4. **El Random Forest valida la coherencia del sistema difuso** — R² = 0.97 y r = 0.99 confirman que el sistema difuso es estadísticamente consistente. Se evaluaron 4 modelos (KNN, SVR, Decision Tree, Random Forest) y Random Forest mostró el mejor desempeño.
 
 5. **La metodología es transferible** — el mismo flujo se aplicó exitosamente al caso de streaming (Parte E) con adaptaciones mínimas.
 

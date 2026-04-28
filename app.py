@@ -396,6 +396,7 @@ def _metrics_table(metrics: dict) -> pd.DataFrame:
         "knn": "K-Nearest Neighbors",
         "random_forest": "Random Forest",
         "decision_tree": "Decision Tree",
+        "svr": "SVR (RBF)",
     }
     for key, vals in metrics.items():
         rows.append({
@@ -439,6 +440,7 @@ def _r2_comparison_chart(metrics: dict, title: str = "Comparación R² por model
         "knn": "KNN",
         "random_forest": "Random Forest",
         "decision_tree": "Decision Tree",
+        "svr": "SVR (RBF)",
     }
     df_r2 = pd.DataFrame([
         {"Modelo": model_names.get(k, k), "R²": v["r2"]}
@@ -567,7 +569,7 @@ if seccion == " Inicio":
                 "4 variables validadas por 4 expertos",
                 "12 reglas Mamdani, 4 variables entrada",
                 "Simulación estocástica N iteraciones",
-                "KNN, Random Forest, Decision Tree",
+                "KNN, Random Forest, Decision Tree, SVR",
             ],
         }
         st.dataframe(pd.DataFrame(resumen_base), use_container_width=True, hide_index=True)
@@ -586,7 +588,7 @@ if seccion == " Inicio":
                 "4 variables de red validadas",
                 "12 reglas Mamdani, riesgo QoS",
                 "Simulación estocástica N iteraciones",
-                "KNN, Random Forest, Decision Tree",
+                "KNN, Random Forest, Decision Tree, SVR",
             ],
         }
         st.dataframe(pd.DataFrame(resumen_st), use_container_width=True, hide_index=True)
@@ -1045,7 +1047,7 @@ elif seccion == " Parte C — Montecarlo":
 elif seccion == " Parte D — Regresión":
     st.title(" Parte D — Análisis de Regresión")
     st.markdown("""
-    Se entrenan tres modelos de aprendizaje automático para predecir el riesgo
+    Se entrenan **cuatro modelos de aprendizaje automático** para predecir el riesgo
     académico a partir de las variables de entrada, validando la coherencia del
     sistema difuso mediante métricas de regresión y correlación de Pearson.
     """)
@@ -1062,7 +1064,52 @@ elif seccion == " Parte D — Regresión":
     - **Importancia de variables**: qué factores usa más el modelo para predecir — debe coincidir con lo que los expertos priorizaron en el Delphi.
     - Un R² alto confirma que el sistema difuso es **coherente y reproducible** estadísticamente.
     """)
-    st.markdown("**Modelos entrenados:** K-Nearest Neighbors · Random Forest · Decision Tree")
+
+    # Explicación de cada modelo
+    with st.expander(" ¿Qué hace cada modelo de regresión?", expanded=False):
+        st.markdown("""
+        ### K-Nearest Neighbors (KNN, k=5)
+        Predice el riesgo de un nuevo estudiante buscando los **5 casos más similares** en la base de datos
+        y promediando sus valores de riesgo. Es intuitivo pero sensible a la escala de las variables
+        (por eso funciona mejor cuando las variables están en rangos similares). No aprende una función
+        explícita — simplemente "recuerda" los datos de entrenamiento.
+
+        **Ventaja:** Simple, sin supuestos sobre la distribución de los datos.
+        **Desventaja:** Lento con muchos datos, sensible a variables irrelevantes.
+
+        ---
+
+        ### Random Forest (100 árboles)
+        Construye **100 árboles de decisión** en paralelo, cada uno entrenado con una muestra aleatoria
+        de los datos y un subconjunto aleatorio de variables. La predicción final es el promedio de todos
+        los árboles. Este enfoque reduce el sobreajuste y produce estimaciones robustas.
+
+        **Ventaja:** Muy preciso, resistente al sobreajuste, genera importancia de variables.
+        **Desventaja:** Menos interpretable que un árbol individual.
+
+        ---
+
+        ### Decision Tree (Árbol de decisión)
+        Aprende una serie de **reglas IF-THEN** sobre las variables de entrada para dividir los datos
+        en grupos con riesgo similar. Por ejemplo: "si promedio < 2.5 Y inasistencia > 60%, entonces
+        riesgo ≈ 85". Es el modelo más interpretable de los cuatro.
+
+        **Ventaja:** Totalmente interpretable, visualizable como diagrama.
+        **Desventaja:** Propenso al sobreajuste si no se limita la profundidad.
+
+        ---
+
+        ### SVR — Support Vector Regression (kernel RBF)
+        Busca la función que mejor ajusta los datos manteniendo los errores dentro de un margen ε=0.1.
+        El **kernel RBF (Radial Basis Function)** permite capturar relaciones no lineales complejas
+        transformando el espacio de variables. Requiere escalado previo de las variables (StandardScaler).
+
+        **Parámetros:** C=100 (tolerancia al error), gamma='scale' (ancho del kernel), ε=0.1 (margen de tolerancia).
+        **Ventaja:** Efectivo en espacios de alta dimensión, robusto ante outliers.
+        **Desventaja:** Más lento de entrenar, difícil de interpretar.
+        """)
+
+    st.markdown("**Modelos entrenados:** K-Nearest Neighbors · Random Forest · Decision Tree · SVR (RBF)")
     st.markdown("**División de datos:** 80 % entrenamiento / 20 % prueba")
     st.markdown("---")
 
@@ -1071,7 +1118,7 @@ elif seccion == " Parte D — Regresión":
         st.warning(" Ejecuta primero la Parte C — Montecarlo para generar `base_simulada.csv`.")
     else:
         if st.button(" Entrenar modelos de regresión", type="primary"):
-            with st.spinner("Entrenando KNN, Random Forest y Decision Tree..."):
+            with st.spinner("Entrenando KNN, Random Forest, Decision Tree y SVR..."):
                 try:
                     _, metrics, importance, corr = run_regression()
                     st.session_state.reg_metrics = metrics
@@ -1102,7 +1149,7 @@ elif seccion == " Parte D — Regresión":
 
                 # Mejor modelo
                 best_model = max(metrics, key=lambda k: metrics[k]["r2"])
-                model_names = {"knn": "K-Nearest Neighbors", "random_forest": "Random Forest", "decision_tree": "Decision Tree"}
+                model_names = {"knn": "K-Nearest Neighbors", "random_forest": "Random Forest", "decision_tree": "Decision Tree", "svr": "SVR (RBF)"}
                 st.success(f" Mejor modelo: **{model_names.get(best_model, best_model)}** con R² = {metrics[best_model]['r2']:.4f}")
 
             with tab2:
@@ -1402,7 +1449,7 @@ justificadas (Beta para usuarios y capacidad, Normal Truncada para ancho de band
         st.info("""
 ¿Qué se muestra aquí?
 Los modelos de regresion se entrenan sobre la base simulada de streaming para verificar
-que el sistema difuso es estadisticamente coherente.
+que el sistema difuso es estadisticamente coherente. Se usan 4 modelos: KNN, Random Forest, Decision Tree y SVR (RBF).
 
 ¿Qué significan los resultados?
 - R² alto (>0.90): el modelo estadistico puede replicar el comportamiento del sistema difuso.
@@ -1410,6 +1457,50 @@ que el sistema difuso es estadisticamente coherente.
   coherente con el conocimiento experto del Delphi.
 - Correlacion de Pearson r > 0.95: ambos enfoques (experto y estadistico) llegan a las mismas conclusiones.
 """)
+
+        with st.expander(" ¿Qué hace cada modelo de regresión? (Streaming)", expanded=False):
+            st.markdown("""
+            ### K-Nearest Neighbors (KNN, k=5)
+            Predice el riesgo QoS de un escenario buscando los **5 escenarios más similares** en la base
+            simulada y promediando sus valores de riesgo. Útil como línea base de comparación.
+
+            **Ventaja:** Simple, sin supuestos sobre la distribución de los datos.
+            **Desventaja:** Sensible a la escala de variables (usuarios en 0–100 vs latencia en 0–10 ms).
+
+            ---
+
+            ### Random Forest (100 árboles)
+            Construye **100 árboles de decisión** en paralelo sobre muestras aleatorias de los datos.
+            La predicción final es el promedio de todos los árboles. Genera automáticamente la
+            importancia de variables, mostrando qué factores de red impactan más el riesgo QoS.
+
+            **Ventaja:** Muy preciso, resistente al sobreajuste, genera importancia de variables.
+            **Desventaja:** Menos interpretable que un árbol individual.
+
+            ---
+
+            ### Decision Tree (Árbol de decisión)
+            Aprende reglas IF-THEN sobre las variables de red. Por ejemplo: "si usuarios > 80% Y
+            latencia > 7ms, entonces riesgo_qos ≈ 88". Es el modelo más interpretable.
+
+            **Ventaja:** Totalmente interpretable, visualizable como diagrama de decisión.
+            **Desventaja:** Propenso al sobreajuste si no se limita la profundidad del árbol.
+
+            ---
+
+            ### SVR — Support Vector Regression (kernel RBF)
+            Busca la función que mejor ajusta los datos de red manteniendo errores dentro de un margen ε=0.1.
+            El **kernel RBF** captura relaciones no lineales entre variables como la interacción entre
+            usuarios concurrentes y capacidad del servidor. Requiere escalado previo (StandardScaler).
+
+            **Parámetros:** C=100 (tolerancia al error), gamma='scale' (ancho del kernel), ε=0.1.
+            **Ventaja:** Efectivo para capturar interacciones no lineales entre variables de red.
+            **Desventaja:** Más lento de entrenar, difícil de interpretar directamente.
+            """)
+
+        st.markdown("**Modelos:** K-Nearest Neighbors · Random Forest · Decision Tree · SVR (RBF)")
+        st.markdown("**División de datos:** 80 % entrenamiento / 20 % prueba")
+        st.markdown("---")
 
         if not os.path.exists("trabajo_final/data/base_simulada_streaming.csv"):
             st.warning(" Ejecuta primero el Montecarlo Streaming.")
@@ -1436,7 +1527,7 @@ que el sistema difuso es estadisticamente coherente.
                 with sub_m:
                     st.dataframe(_metrics_table(metrics_st), use_container_width=True, hide_index=True)
                     best_st = max(metrics_st, key=lambda k: metrics_st[k]["r2"])
-                    model_names = {"knn": "K-Nearest Neighbors", "random_forest": "Random Forest", "decision_tree": "Decision Tree"}
+                    model_names = {"knn": "K-Nearest Neighbors", "random_forest": "Random Forest", "decision_tree": "Decision Tree", "svr": "SVR (RBF)"}
                     st.success(f" Mejor modelo: **{model_names.get(best_st, best_st)}** con R² = {metrics_st[best_st]['r2']:.4f}")
 
                 with sub_i:
@@ -1454,8 +1545,8 @@ que el sistema difuso es estadisticamente coherente.
 
     if st.session_state.regression_done and st.session_state.st_regression_done:
         comp_data = []
-        model_names = {"knn": "KNN", "random_forest": "Random Forest", "decision_tree": "Decision Tree"}
-        for key in ["knn", "random_forest", "decision_tree"]:
+        model_names = {"knn": "KNN", "random_forest": "Random Forest", "decision_tree": "Decision Tree", "svr": "SVR (RBF)"}
+        for key in ["knn", "random_forest", "decision_tree", "svr"]:
             base_m = st.session_state.reg_metrics.get(key, {})
             st_m = st.session_state.st_reg_metrics.get(key, {})
             comp_data.append({
@@ -1529,8 +1620,8 @@ elif seccion == " Conclusiones":
 
     comp_rows = []
     if st.session_state.regression_done and st.session_state.st_regression_done:
-        model_names = {"knn": "KNN (k=5)", "random_forest": "Random Forest", "decision_tree": "Decision Tree"}
-        for key in ["knn", "random_forest", "decision_tree"]:
+        model_names = {"knn": "KNN (k=5)", "random_forest": "Random Forest", "decision_tree": "Decision Tree", "svr": "SVR (RBF)"}
+        for key in ["knn", "random_forest", "decision_tree", "svr"]:
             base_m = st.session_state.reg_metrics.get(key, {})
             st_m = st.session_state.st_reg_metrics.get(key, {})
             comp_rows.append({
@@ -1705,12 +1796,13 @@ elif seccion == " Conclusiones":
         del sistema difuso es consistente y reproducible. Es una validación de coherencia interna.
         """)
 
-    with st.expander("¿Por qué se usan 3 modelos de regresión?"):
+    with st.expander("¿Por qué se usan 4 modelos de regresión?"):
         st.markdown("""
-        Se usan KNN, Random Forest y Decision Tree para comparar enfoques con diferentes
+        Se usan KNN, Random Forest, Decision Tree y SVR (RBF) para comparar enfoques con diferentes
         características: KNN es no paramétrico y sensible a la escala; Random Forest es un
         ensemble robusto con importancia de variables; Decision Tree es interpretable y
-        permite visualizar las reglas aprendidas. La comparación permite identificar cuál
+        permite visualizar las reglas aprendidas; SVR con kernel RBF captura relaciones no lineales
+        complejas. La comparación permite identificar cuál
         captura mejor el comportamiento del sistema difuso.
         """)
 

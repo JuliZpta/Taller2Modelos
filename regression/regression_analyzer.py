@@ -16,6 +16,9 @@ from scipy.stats import pearsonr
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.tree import DecisionTreeRegressor
+from sklearn.svm import SVR
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
@@ -30,6 +33,10 @@ class RegressionAnalyzer:
         "knn": KNeighborsRegressor(n_neighbors=5),
         "random_forest": RandomForestRegressor(n_estimators=100, random_state=42),
         "decision_tree": DecisionTreeRegressor(random_state=42),
+        "svr": Pipeline([
+            ("scaler", StandardScaler()),
+            ("svr", SVR(kernel="rbf", C=100, gamma="scale", epsilon=0.1))
+        ]),
     }
 
     TEST_SIZE = 0.20
@@ -266,6 +273,7 @@ class RegressionAnalyzer:
             "knn": "KNN (k=5)",
             "random_forest": "Random Forest",
             "decision_tree": "Decision Tree",
+            "svr": "SVR (RBF)",
         }
 
         for name, m in metrics.items():
@@ -305,6 +313,9 @@ class RegressionAnalyzer:
             "`random_state=42`. Robusto ante sobreajuste.",
             "- **Decision Tree:** Árbol de decisión individual con `random_state=42`. "
             "Alta interpretabilidad.",
+            "- **SVR (RBF):** Support Vector Regression con kernel RBF (Radial Basis Function). "
+            "Usa escalado estándar de variables y parámetros C=100, gamma='scale', epsilon=0.1. "
+            "Efectivo para relaciones no lineales complejas.",
             "",
             "## Partición de Datos",
             "",
@@ -416,6 +427,7 @@ class RegressionAnalyzer:
             "knn": "KNN (k=5)",
             "random_forest": "Random Forest",
             "decision_tree": "Decision Tree",
+            "svr": "SVR (RBF)",
         }
 
         # Construir mapa de trazabilidad desde consenso Delphi
