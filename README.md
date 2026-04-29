@@ -42,55 +42,121 @@ Organizado en módulos independientes con trazabilidad completa desde el consens
 
 ## Ejecución
 
-### Aplicación Streamlit
+### Requisitos previos
 
-La aplicación integra todos los módulos del taller en una interfaz interactiva. Para ejecutarla, siga los pasos a continuación desde la raíz del repositorio:
+Antes de comenzar, asegúrese de tener instalado lo siguiente en su computador:
 
-**Paso 1 — Instalar dependencias**
+- **Python 3.10 o superior** — puede descargarlo desde [https://www.python.org/downloads/](https://www.python.org/downloads/).  
+  Durante la instalación en Windows, marque la opción **"Add Python to PATH"**.
+- **Git** — para clonar el repositorio. Descárguelo desde [https://git-scm.com/downloads](https://git-scm.com/downloads).
 
-Se requiere Python 3.10 o superior. Se recomienda usar un entorno virtual:
+Para verificar que ambos están instalados, abra una terminal (en Windows: `cmd` o `PowerShell`) y ejecute:
+
+```bash
+python --version
+git --version
+```
+
+Ambos comandos deben mostrar un número de versión sin errores.
+
+---
+
+### Paso 1 — Clonar el repositorio
+
+Abra una terminal y ejecute el siguiente comando. Esto descargará todos los archivos del proyecto en una carpeta llamada `ModeloSimulacion`:
+
+```bash
+git clone https://github.com/JulianZapata/ModeloSimulacion.git
+```
+
+Luego ingrese a la carpeta del proyecto:
+
+```bash
+cd ModeloSimulacion
+```
+
+Todos los comandos siguientes deben ejecutarse desde dentro de esta carpeta.
+
+---
+
+### Paso 2 — Crear un entorno virtual
+
+Un entorno virtual aísla las dependencias del proyecto para no afectar otros programas de Python instalados en el sistema.
+
+**En Linux o macOS:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+**En Windows:**
 
 ```bash
 python -m venv venv
-source venv/bin/activate        # Linux / macOS
-venv\Scripts\activate           # Windows
+venv\Scripts\activate
 ```
 
-Luego instalar los paquetes:
+Cuando el entorno esté activo, verá el prefijo `(venv)` al inicio de la línea en la terminal. Esto indica que está trabajando dentro del entorno virtual.
+
+---
+
+### Paso 3 — Instalar las dependencias
+
+Con el entorno virtual activo, instale todos los paquetes necesarios ejecutando:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**Paso 2 — Ejecutar la aplicación**
+Este proceso puede tardar entre 2 y 5 minutos dependiendo de la velocidad de la conexión a internet. Al finalizar, todos los paquetes estarán disponibles.
+
+---
+
+### Paso 4 — Ejecutar la aplicación Streamlit
 
 ```bash
 streamlit run app.py
 ```
 
-Streamlit abrirá automáticamente el navegador en `http://localhost:8501`. Si no abre, copie esa dirección manualmente en el navegador.
+Streamlit iniciará un servidor local y abrirá automáticamente el navegador en la dirección `http://localhost:8501`. Si el navegador no abre solo, copie esa dirección y péguela manualmente en cualquier navegador (Chrome, Firefox, Edge).
 
-**Paso 3 — Navegar por las secciones**
+La terminal debe mostrar algo similar a:
 
-La barra lateral izquierda permite navegar entre las partes del taller:
+```
+  You can now view your Streamlit app in your browser.
+  Local URL: http://localhost:8501
+```
 
-- **Inicio** — resumen del estado de ejecución de cada módulo
-- **Parte A — Delphi** — ejecutar el proceso de 3 rondas con el panel de expertos
-- **Parte B — Sistema Difuso** — construir el sistema Mamdani y usar la calculadora interactiva
-- **Parte C — Montecarlo** — configurar el número de simulaciones y ver el histograma
-- **Parte D — Regresión** — entrenar los 4 modelos y ver métricas, importancias y correlación
-- **Parte E — Streaming** — flujo completo aplicado al caso de plataforma de streaming
-- **Conclusiones** — análisis comparativo final entre ambos casos
+Para detener la aplicación en cualquier momento, presione `Ctrl + C` en la terminal.
 
-Cada sección tiene un botón de ejecución independiente. Se pueden ejecutar en orden o usar el botón **"Ejecutar flujo completo"** en la sección Inicio para correr todo el caso base de una vez.
+---
 
-### Notebook
+### Paso 5 — Navegar por la aplicación
+
+La barra lateral izquierda permite navegar entre las partes del taller. El orden de ejecución sugerido es:
+
+1. **Inicio** — muestra el estado de cada módulo. Desde aquí puede ejecutar el flujo completo del caso base con un solo clic en el botón "Ejecutar flujo completo (Caso Base)".
+2. **Parte A — Delphi** — ejecuta el proceso de 3 rondas con el panel de expertos y muestra el gráfico de convergencia.
+3. **Parte B — Sistema Difuso** — construye el sistema Mamdani y permite calcular el riesgo en tiempo real con los sliders.
+4. **Parte C — Montecarlo** — configura el número de simulaciones y genera el histograma de distribución del riesgo.
+5. **Parte D — Regresión** — entrena los 4 modelos (KNN, SVR, Decision Tree, Random Forest) y muestra métricas, importancia de variables y correlación de Pearson.
+6. **Parte E — Streaming** — repite el flujo completo aplicado al caso de plataforma de streaming (QoS).
+7. **Conclusiones** — análisis comparativo final entre ambos casos.
+
+Cada sección tiene su propio botón de ejecución. No es necesario ejecutar todas las secciones; cada una puede correrse de forma independiente siempre que la sección anterior haya generado sus archivos de datos.
+
+---
+
+### Alternativa: Notebook de Jupyter
+
+Si prefiere ejecutar el proyecto como un notebook paso a paso:
 
 ```bash
 jupyter notebook notebooks/proyecto_completo.ipynb
 ```
 
-Ejecutar con **Kernel → Restart & Run All**.
+Dentro del notebook, vaya al menú **Kernel → Restart & Run All** para ejecutar todas las celdas en orden.
 
 ---
 
