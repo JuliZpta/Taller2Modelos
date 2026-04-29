@@ -216,12 +216,13 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 
 | Estadístico | Valor |
 |---|---|
-| Media del riesgo | ~50 |
-| Desviación estándar | ~25 |
-| P(riesgo ≥ 70) | ~30 % |
-| Distribución | Aproximadamente uniforme entre 10 y 90 |
+| Media del riesgo | 54.26 |
+| Desviación estándar | 22.42 |
+| P(riesgo ≥ 70) | 22.4 % |
+| Percentil 95 | 90.18 |
+| Rango | [7.43, 90.18] |
 
-> Con distribuciones uniformes de entrada, la distribución de salida refleja la cobertura del sistema difuso. El ~30% de escenarios críticos indica que el sistema diferencia bien entre situaciones de riesgo.
+> Con distribuciones uniformes de entrada, la distribución de salida refleja la cobertura del sistema difuso en todo su espacio de estados.
 
 ---
 
@@ -246,21 +247,115 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 
 | Ranking | Variable | Importancia |
 |---|---|---|
-| 1° | **promedio_academico** | **~46 %** |
-| 2° | horas_estudio | ~25 % |
-| 3° | motivacion_estres | ~16 % |
-| 4° | inasistencia | ~14 % |
+| 1° | **inasistencia** | **50.01 %** |
+| 2° | promedio_academico | 41.04 % |
+| 3° | horas_estudio | 4.92 % |
+| 4° | motivacion_estres | 4.03 % |
+
+---
+
+## Parte E — Proyecto Final: Plataforma de Streaming
+
+### Descripción del Sistema
+
+El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montecarlo → Regresión) a un caso diferente: evaluación del **riesgo de degradación de QoS** en una plataforma de streaming de video.
+
+**Variable de salida:** `riesgo_qos` (0–100) — índice de riesgo de degradación del servicio.
+
+### Panel de Expertos (Sector Tecnológico)
+
+| ID | Nombre | Cargo | Área |
+|---|---|---|---|
+| E1 | Ing. Santiago Vargas | Arquitecto de Infraestructura Cloud | Plataformas Digitales |
+| E2 | Mg. Valentina Torres | Analista de QoS y Redes | Operaciones de Red |
+| E3 | Dr. Felipe Morales | Investigador en Sistemas Distribuidos | I+D |
+| E4 | Ing. Camila Ríos | Especialista en Experiencia de Usuario (UX) | Área de Producto |
+
+### Resultados Delphi — Ronda 3
+
+| Factor | Media | CV | % Aprobación | Resultado |
+|---|---|---|---|---|
+| usuarios_concurrentes | 4.75 | 0.091 | 100 % | ✅ Aprobado |
+| uso_ancho_banda | 4.25 | 0.102 | 100 % | ✅ Aprobado |
+| latencia_red | 4.25 | 0.102 | 100 % | ✅ Aprobado |
+| capacidad_servidor | 4.25 | 0.102 | 100 % | ✅ Aprobado |
+
+**4/4 variables aprobadas · 100% consenso**
+
+### Sistema Difuso Mamdani
+
+| Variable | Universo | Etiquetas |
+|---|---|---|
+| usuarios_concurrentes | [0, 100] | bajo, medio, alto |
+| uso_ancho_banda | [0, 100 %] | bajo, medio, alto |
+| latencia_red | [0, 10 ms] | baja, media, alta |
+| capacidad_servidor | [0, 100 %] | baja, media, alta |
+| **riesgo_qos** (salida) | [0, 100] | muy_bajo · bajo · medio · alto · muy_alto |
+
+**27 reglas Mamdani · 5 niveles de salida · Defuzzificación por centroide**
+
+### Simulación Montecarlo (5000 iteraciones)
+
+| Variable | Distribución | Parámetros | Justificación |
+|---|---|---|---|
+| usuarios_concurrentes | Beta(α=2, β=3) × 100 | α=2, β=3 | Mayoría del tiempo con carga media-baja; picos ocasionales |
+| uso_ancho_banda | Normal Truncada | μ=55, σ=20, [0,100] | Uso promedio del 55% con alta variabilidad |
+| latencia_red | Triangular | mín=0, moda=3, máx=10 | Latencia típica baja con cola hacia valores altos |
+| capacidad_servidor | Beta(α=3, β=2) × 100 | α=3, β=2 | Servidores operan típicamente a alta capacidad |
+
+**Resultados:**
+- Media riesgo_qos: **36.58**
+- Desviación estándar: **16.14**
+- P(riesgo_qos ≥ 70): **2.9 %** (escenarios críticos)
+- Percentil 95: **63.86**
+- Rango: [17.05, 91.56]
+
+### Regresión y Análisis Comparativo
+
+| Modelo | MAE | RMSE | R² |
+|---|---|---|---|
+| KNN (k=5) | 5.53 | 8.14 | 0.75 |
+| SVR (RBF) | 3.64 | 5.05 | 0.90 |
+| Decision Tree | 0.91 | 2.29 | 0.98 |
+| **Random Forest** | **0.66** | **1.64** | **0.99** |
+
+**Correlación de Pearson: r = 0.9950**
+
+### Importancia de Variables (Random Forest — Streaming)
+
+| Ranking | Variable | Importancia |
+|---|---|---|
+| 1° | **usuarios_concurrentes** | **37.76 %** |
+| 2° | uso_ancho_banda | 35.38 % |
+| 3° | latencia_red | 23.95 % |
+| 4° | capacidad_servidor | 2.90 % |
+
+> `usuarios_concurrentes` y `uso_ancho_banda` dominan con ~73% combinado. `capacidad_servidor` tiene menor peso en este dataset.
+
+### Comparación: Caso Base vs Streaming
+
+| Aspecto | Caso Base (Académico) | Proyecto Final (Streaming) |
+|---|---|---|
+| **Variables** | promedio, inasistencia, horas, motivacion | usuarios, banda, latencia, capacidad |
+| **Reglas** | 27 | 27 |
+| **Niveles de salida** | 5 | 5 |
+| **Simulaciones** | 1000 | 5000 |
+| **Mejor R²** | 0.9747 (RF) | **0.9899 (RF)** |
+| **Pearson r** | 0.9877 | **0.9950** |
+| **Variable clave** | inasistencia (50.01%) | usuarios_concurrentes (37.76%) |
+| **P(riesgo ≥ 70)** | 22.4% (entradas uniformes) | 2.9% (distribuciones reales) |
+| **Modelos evaluados** | 4 (KNN, SVR, DT, RF) | 4 (KNN, SVR, DT, RF) |
 
 ---
 
 ## Resumen de Resultados
 
-| Componente | Resultado clave |
-|---|---|
-| **Delphi** | 4/4 variables aprobadas · 100% consenso · CV < 0.12 |
-| **Sistema Difuso** | 27 reglas · 5 niveles · Riesgo muy alto ≈ 82 · Muy bajo ≈ 16 |
-| **Montecarlo** | Distribución uniforme · P(riesgo ≥ 70) ≈ 30% con entradas uniformes |
-| **Regresión** | Random Forest R² = 0.97 · Pearson r = 0.99 · 4 modelos evaluados (KNN, SVR, DT, RF) |
+| Componente | Caso Base (Académico) | Proyecto Final (Streaming) |
+|---|---|---|
+| **Delphi** | 4/4 aprobadas · 100% consenso · CV ≤ 0.102 | 4/4 aprobadas · 100% consenso · CV ≤ 0.102 |
+| **Sistema Difuso** | 27 reglas · 5 niveles · Riesgo muy alto ≈ 82 | 27 reglas · 5 niveles · Riesgo muy alto ≈ 82 |
+| **Montecarlo** | 1000 sims · media=54.26 · P(≥70)=22.4% | 5000 sims · media=36.58 · P(≥70)=2.9% |
+| **Regresión** | RF R²=0.9747 · r=0.9877 · var. clave: inasistencia | RF R²=0.9899 · r=0.9950 · var. clave: usuarios_concurrentes |
 
 ---
 
@@ -293,15 +388,15 @@ Regresión (KNN / SVR / Random Forest / Decision Tree)
 
 ## Conclusiones
 
-1. **El Delphi garantiza respaldo experto real** — las 4 variables tienen media ≥ 4.0, CV ≤ 0.12 y 100% de aprobación.
+1. **El Delphi garantiza respaldo experto real** — las 4 variables tienen media ≥ 4.0, CV ≤ 0.102 y 100% de aprobación en ambos casos.
 
 2. **El sistema difuso captura comportamiento no lineal** — 27 reglas con 5 niveles de salida producen una distribución continua y diferenciada del riesgo.
 
-3. **La simulación Montecarlo explora todo el espacio de estados** — con distribuciones uniformes, el histograma refleja el comportamiento real del sistema difuso sin sesgos.
+3. **La simulación Montecarlo explora todo el espacio de estados** — con distribuciones uniformes en el caso base, el histograma refleja el comportamiento real del sistema difuso (media=54.26, P(≥70)=22.4%).
 
-4. **El Random Forest valida la coherencia del sistema difuso** — R² = 0.97 y r = 0.99 confirman que el sistema difuso es estadísticamente consistente. Se evaluaron 4 modelos (KNN, SVR, Decision Tree, Random Forest) y Random Forest mostró el mejor desempeño.
+4. **El Random Forest valida la coherencia del sistema difuso** — R²=0.9747 y r=0.9877 en el caso base; R²=0.9899 y r=0.9950 en streaming. Se evaluaron 4 modelos (KNN, SVR, Decision Tree, Random Forest) y Random Forest mostró el mejor desempeño en ambos casos.
 
-5. **La metodología es transferible** — el mismo flujo se aplicó exitosamente al caso de streaming (Parte E) con adaptaciones mínimas.
+5. **La metodología es transferible** — el mismo flujo se aplicó exitosamente al caso de streaming (Parte E) con adaptaciones mínimas, obteniendo resultados incluso superiores (R²=0.9899, r=0.9950).
 
 6. **La trazabilidad es completa** — cada decisión de diseño puede vincularse al consenso Delphi.
 
