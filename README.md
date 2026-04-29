@@ -34,26 +34,55 @@ Organizado en módulos independientes con trazabilidad completa desde el consens
 
 | Entregable | Archivo | Descripción |
 |---|---|---|
-| App interactiva | `app.py` | Aplicación Streamlit con flujo completo ejecutable en tiempo real ⭐ |
+| Aplicación interactiva | `app.py` | Aplicación Streamlit con flujo completo ejecutable en tiempo real |
 | Notebook | `notebooks/proyecto_completo.ipynb` | Flujo A→B→C→D ejecutable secuencialmente |
 | Proyecto Final | `trabajo_final/` | Parte E: misma metodología aplicada a streaming |
 
 ---
 
-## Ejecución Rápida
+## Ejecución
 
-### App Streamlit (recomendado para exposición)
+### Aplicación Streamlit
+
+La aplicación integra todos los módulos del taller en una interfaz interactiva. Para ejecutarla, siga los pasos a continuación desde la raíz del repositorio:
+
+**Paso 1 — Instalar dependencias**
+
+Se requiere Python 3.10 o superior. Se recomienda usar un entorno virtual:
+
+```bash
+python -m venv venv
+source venv/bin/activate        # Linux / macOS
+venv\Scripts\activate           # Windows
+```
+
+Luego instalar los paquetes:
 
 ```bash
 pip install -r requirements.txt
+```
+
+**Paso 2 — Ejecutar la aplicación**
+
+```bash
 streamlit run app.py
 ```
 
-Abre `http://localhost:8501` en el navegador. La app incluye:
-- Ejecución interactiva de cada módulo
-- Calculadora de riesgo con sliders en tiempo real
-- Histogramas y gráficos interactivos
-- Conclusiones con KPIs dinámicos
+Streamlit abrirá automáticamente el navegador en `http://localhost:8501`. Si no abre, copie esa dirección manualmente en el navegador.
+
+**Paso 3 — Navegar por las secciones**
+
+La barra lateral izquierda permite navegar entre las partes del taller:
+
+- **Inicio** — resumen del estado de ejecución de cada módulo
+- **Parte A — Delphi** — ejecutar el proceso de 3 rondas con el panel de expertos
+- **Parte B — Sistema Difuso** — construir el sistema Mamdani y usar la calculadora interactiva
+- **Parte C — Montecarlo** — configurar el número de simulaciones y ver el histograma
+- **Parte D — Regresión** — entrenar los 4 modelos y ver métricas, importancias y correlación
+- **Parte E — Streaming** — flujo completo aplicado al caso de plataforma de streaming
+- **Conclusiones** — análisis comparativo final entre ambos casos
+
+Cada sección tiene un botón de ejecución independiente. Se pueden ejecutar en orden o usar el botón **"Ejecutar flujo completo"** en la sección Inicio para correr todo el caso base de una vez.
 
 ### Notebook
 
@@ -70,27 +99,27 @@ Ejecutar con **Kernel → Restart & Run All**.
 ```
 ModeloSimulacion/
 │
-├── README.md                          ← Este archivo
-├── requirements.txt                   ← Dependencias con versiones fijas
-├── app.py                             ← App Streamlit interactiva ⭐
+├── README.md                          <- Este archivo
+├── requirements.txt                   <- Dependencias con versiones fijas
+├── app.py                             <- Aplicación Streamlit principal
 │
-├── delphi/                            ← Módulo A: Proceso Delphi
-│   ├── expert_panel.py                ← 4 expertos simulados (Pascual Bravo)
-│   └── delphi_simulator.py            ← 3 rondas con criterios de consenso
+├── delphi/                            <- Módulo A: Proceso Delphi
+│   ├── expert_panel.py                <- 4 expertos simulados (Pascual Bravo)
+│   └── delphi_simulator.py            <- 3 rondas con criterios de consenso
 │
-├── fuzzy_system/                      ← Módulo B: Sistema Difuso Mamdani
-│   └── fuzzy_system_builder.py        ← 27 reglas, 5 niveles de salida
+├── fuzzy_system/                      <- Módulo B: Sistema Difuso Mamdani
+│   └── fuzzy_system_builder.py        <- 27 reglas, 5 niveles de salida
 │
-├── montecarlo/                        ← Módulo C: Simulación Montecarlo
-│   └── montecarlo_simulator.py        ← Distribuciones uniformes, N simulaciones
+├── montecarlo/                        <- Módulo C: Simulación Montecarlo
+│   └── montecarlo_simulator.py        <- Distribuciones uniformes, N simulaciones
 │
-├── regression/                        ← Módulo D: Regresión y predicción
-│   └── regression_analyzer.py         ← KNN, Random Forest, Decision Tree
+├── regression/                        <- Módulo D: Regresión y predicción
+│   └── regression_analyzer.py         <- KNN, SVR, Random Forest, Decision Tree
 │
 ├── notebooks/
-│   └── proyecto_completo.ipynb        ← Notebook principal (flujo A→B→C→D)
+│   └── proyecto_completo.ipynb        <- Notebook principal (flujo A->B->C->D)
 │
-├── data/                              ← Archivos generados automáticamente
+├── data/                              <- Archivos generados automáticamente
 │   ├── delphi_ronda1.json
 │   ├── delphi_ronda2.json
 │   ├── delphi_consenso.json
@@ -99,9 +128,9 @@ ModeloSimulacion/
 │   ├── fuzzy_warnings.json
 │   └── base_simulada.csv
 │
-├── docs/                              ← Documentación y gráficas generadas
+├── docs/                              <- Documentación y gráficas generadas
 │   ├── delphi_informe.md
-│   ├── fuzzy_membership_plots/        ← 5 PNG de funciones de pertenencia
+│   ├── fuzzy_membership_plots/        <- 5 PNG de funciones de pertenencia
 │   ├── montecarlo_histograma.png
 │   ├── montecarlo_distribuciones.md
 │   ├── regression_comparativa.md
@@ -110,7 +139,7 @@ ModeloSimulacion/
 │   ├── analisis_comparativo.md
 │   └── trazabilidad.md
 │
-├── trabajo_final/                     ← Parte E: Plataforma de Streaming
+├── trabajo_final/                     <- Parte E: Plataforma de Streaming
 │   ├── README.md
 │   ├── data/
 │   ├── delphi/
@@ -120,7 +149,7 @@ ModeloSimulacion/
 │   ├── notebooks/streaming_completo.ipynb
 │   └── docs/
 │
-└── tests/                             ← Pruebas unitarias
+└── tests/                             <- Pruebas unitarias
 ```
 
 ---
@@ -140,18 +169,18 @@ ModeloSimulacion/
 
 | Criterio | Umbral |
 |---|---|
-| Media grupal (Likert 1–5) | ≥ 4.0 |
-| Coeficiente de Variación (CV) | ≤ 0.30 |
-| % expertos con puntuación ≥ 4 | ≥ 70 % |
+| Media grupal (Likert 1–5) | >= 4.0 |
+| Coeficiente de Variación (CV) | <= 0.30 |
+| % expertos con puntuación >= 4 | >= 70 % |
 
 ### Resultados — Ronda 3 (Validación Final)
 
 | Factor | Media | CV | % Aprobación | Resultado |
 |---|---|---|---|---|
-| promedio_academico | 4.75 | 0.091 | 100 % | ✅ Aprobado |
-| inasistencia | 4.25 | 0.102 | 100 % | ✅ Aprobado |
-| horas_estudio | 4.25 | 0.102 | 100 % | ✅ Aprobado |
-| motivacion_estres | 4.25 | 0.102 | 100 % | ✅ Aprobado |
+| promedio_academico | 4.75 | 0.091 | 100 % | Aprobado |
+| inasistencia | 4.25 | 0.102 | 100 % | Aprobado |
+| horas_estudio | 4.25 | 0.102 | 100 % | Aprobado |
+| motivacion_estres | 4.25 | 0.102 | 100 % | Aprobado |
 
 **4/4 variables aprobadas · 100% consenso · 0 variables rechazadas**
 
@@ -168,15 +197,15 @@ ModeloSimulacion/
 | horas_estudio | [0, 30 h] | pocas, moderadas, muchas |
 | motivacion_estres | [0, 10] | bajo, medio, alto |
 
-### Variable de Salida — 5 niveles (actualizado)
+### Variable de Salida — 5 niveles
 
 | Variable | Universo | Etiquetas | Defuzzificación |
 |---|---|---|---|
 | riesgo | [0, 100] | muy_bajo · bajo · medio · alto · muy_alto | Centroide |
 
-> **Nota:** Se usan 5 etiquetas asimétricas (centroides en ~9, ~23, ~46, ~69, ~91) para evitar concentración de valores en puntos redondos y obtener una distribución continua en el Montecarlo.
+Se usan 5 etiquetas asimétricas (centroides en ~9, ~23, ~46, ~69, ~91) para evitar concentración de valores en puntos redondos y obtener una distribución continua en el Montecarlo.
 
-### Reglas Difusas — 27 reglas con cobertura completa (actualizado)
+### Reglas Difusas — 27 reglas con cobertura completa
 
 El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinaciones relevantes del espacio de entrada, garantizando activación mixta de etiquetas de salida:
 
@@ -191,26 +220,26 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 
 | Escenario | promedio | inasistencia | horas | motivacion | Riesgo |
 |---|---|---|---|---|---|
-| Muy alto riesgo | 1.0 | 90 % | 2 h | 1 | **~82** |
-| Alto riesgo | 2.0 | 65 % | 4 h | 2 | **~70** |
-| Riesgo medio | 3.5 | 40 % | 15 h | 5 | **~47** |
-| Bajo riesgo | 4.5 | 5 % | 25 h | 8 | **~22** |
-| Muy bajo riesgo | 4.8 | 2 % | 28 h | 9 | **~16** |
+| Muy alto riesgo | 1.0 | 90 % | 2 h | 1 | ~82 |
+| Alto riesgo | 2.0 | 65 % | 4 h | 2 | ~70 |
+| Riesgo medio | 3.5 | 40 % | 15 h | 5 | ~47 |
+| Bajo riesgo | 4.5 | 5 % | 25 h | 8 | ~22 |
+| Muy bajo riesgo | 4.8 | 2 % | 28 h | 9 | ~16 |
 
 ---
 
 ## Parte C — Simulación Montecarlo
 
-### Distribuciones (actualizado — uniformes para cobertura completa)
+### Distribuciones (uniformes para cobertura completa del espacio de estados)
 
 | Variable | Distribución | Parámetros | Justificación |
 |---|---|---|---|
-| promedio_academico | **Uniforme** | [0.5, 5.0] | Cobertura completa del espacio de estados del sistema difuso |
-| inasistencia | **Uniforme** | [0, 100] | Exploración de todos los escenarios posibles |
-| horas_estudio | **Uniforme** | [0, 30] | Cobertura uniforme del universo de discurso |
-| motivacion_estres | **Uniforme** | [0, 10] | Cobertura de todos los niveles |
+| promedio_academico | Uniforme | [0.5, 5.0] | Cobertura completa del espacio de estados del sistema difuso |
+| inasistencia | Uniforme | [0, 100] | Exploración de todos los escenarios posibles |
+| horas_estudio | Uniforme | [0, 30] | Cobertura uniforme del universo de discurso |
+| motivacion_estres | Uniforme | [0, 10] | Cobertura de todos los niveles |
 
-> Las distribuciones uniformes garantizan que el histograma de riesgo refleje el comportamiento real del sistema difuso en todo su espacio de estados, sin sesgos hacia zonas específicas.
+Las distribuciones uniformes garantizan que el histograma de riesgo refleje el comportamiento real del sistema difuso en todo su espacio de estados, sin sesgos hacia zonas específicas.
 
 ### Resultados (n = 1000, RANDOM_SEED = 42)
 
@@ -218,15 +247,24 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 |---|---|
 | Media del riesgo | 54.26 |
 | Desviación estándar | 22.42 |
-| P(riesgo ≥ 70) | 22.4 % |
+| P(riesgo >= 70) | 22.4 % |
 | Percentil 95 | 90.18 |
 | Rango | [7.43, 90.18] |
-
-> Con distribuciones uniformes de entrada, la distribución de salida refleja la cobertura del sistema difuso en todo su espacio de estados.
 
 ---
 
 ## Parte D — Regresión y Análisis Comparativo
+
+Se entrenaron cuatro modelos de aprendizaje automático sobre la base simulada por Montecarlo. El objetivo es verificar que el sistema difuso es estadísticamente coherente y reproducible.
+
+### Modelos Evaluados
+
+| Modelo | Descripción |
+|---|---|
+| KNN (k=5) | Regresión por los 5 vecinos más cercanos. No paramétrico, sensible a la escala. |
+| SVR (RBF) | Support Vector Regression con kernel RBF. Captura relaciones no lineales. Requiere escalado previo. |
+| Decision Tree | Árbol de decisión individual. Alta interpretabilidad. |
+| Random Forest | Ensemble de 100 árboles de decisión. Robusto ante sobreajuste. Genera importancia de variables. |
 
 ### Métricas de Evaluación
 
@@ -235,19 +273,19 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 | KNN (k=5) | 10.80 | 13.78 | 0.58 |
 | SVR (RBF) | 4.80 | 6.55 | 0.91 |
 | Decision Tree | 2.33 | 5.32 | 0.94 |
-| **Random Forest** | **1.84** | **3.39** | **0.97** |
+| **Random Forest** | **1.84** | **3.39** | **0.9747** |
 
-> **Nota:** Se añadió SVR (Support Vector Regression con kernel RBF) como modelo de prueba adicional. Random Forest mantiene el mejor desempeño con R² = 0.97.
+Partición: 80% entrenamiento / 20% prueba · `random_state = 42`
 
 ### Correlación de Pearson
 
-**r ≈ 0.99** — correlación muy alta entre Random Forest y sistema difuso.
+**r = 0.9877** — correlación muy alta entre las predicciones de Random Forest y los valores del sistema difuso.
 
 ### Importancia de Variables (Random Forest)
 
 | Ranking | Variable | Importancia |
 |---|---|---|
-| 1° | **inasistencia** | **50.01 %** |
+| 1° | inasistencia | 50.01 % |
 | 2° | promedio_academico | 41.04 % |
 | 3° | horas_estudio | 4.92 % |
 | 4° | motivacion_estres | 4.03 % |
@@ -256,9 +294,7 @@ El sistema usa **27 reglas con 3 antecedentes** que cubren todas las combinacion
 
 ## Parte E — Proyecto Final: Plataforma de Streaming
 
-### Descripción del Sistema
-
-El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montecarlo → Regresión) a un caso diferente: evaluación del **riesgo de degradación de QoS** en una plataforma de streaming de video.
+El proyecto final aplica la misma metodología (Delphi → Difuso → Montecarlo → Regresión) a un caso diferente: evaluación del **riesgo de degradación de QoS** en una plataforma de streaming de video.
 
 **Variable de salida:** `riesgo_qos` (0–100) — índice de riesgo de degradación del servicio.
 
@@ -275,10 +311,10 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 
 | Factor | Media | CV | % Aprobación | Resultado |
 |---|---|---|---|---|
-| usuarios_concurrentes | 4.75 | 0.091 | 100 % | ✅ Aprobado |
-| uso_ancho_banda | 4.25 | 0.102 | 100 % | ✅ Aprobado |
-| latencia_red | 4.25 | 0.102 | 100 % | ✅ Aprobado |
-| capacidad_servidor | 4.25 | 0.102 | 100 % | ✅ Aprobado |
+| usuarios_concurrentes | 4.75 | 0.091 | 100 % | Aprobado |
+| uso_ancho_banda | 4.25 | 0.102 | 100 % | Aprobado |
+| latencia_red | 4.25 | 0.102 | 100 % | Aprobado |
+| capacidad_servidor | 4.25 | 0.102 | 100 % | Aprobado |
 
 **4/4 variables aprobadas · 100% consenso**
 
@@ -290,9 +326,9 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 | uso_ancho_banda | [0, 100 %] | bajo, medio, alto |
 | latencia_red | [0, 10 ms] | baja, media, alta |
 | capacidad_servidor | [0, 100 %] | baja, media, alta |
-| **riesgo_qos** (salida) | [0, 100] | muy_bajo · bajo · medio · alto · muy_alto |
+| riesgo_qos (salida) | [0, 100] | muy_bajo · bajo · medio · alto · muy_alto |
 
-**27 reglas Mamdani · 5 niveles de salida · Defuzzificación por centroide**
+27 reglas Mamdani · 5 niveles de salida · Defuzzificación por centroide
 
 ### Simulación Montecarlo (5000 iteraciones)
 
@@ -303,12 +339,13 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 | latencia_red | Triangular | mín=0, moda=3, máx=10 | Latencia típica baja con cola hacia valores altos |
 | capacidad_servidor | Beta(α=3, β=2) × 100 | α=3, β=2 | Servidores operan típicamente a alta capacidad |
 
-**Resultados:**
-- Media riesgo_qos: **36.58**
-- Desviación estándar: **16.14**
-- P(riesgo_qos ≥ 70): **2.9 %** (escenarios críticos)
-- Percentil 95: **63.86**
-- Rango: [17.05, 91.56]
+| Estadístico | Valor |
+|---|---|
+| Media riesgo_qos | 36.58 |
+| Desviación estándar | 16.14 |
+| P(riesgo_qos >= 70) | 2.9 % |
+| Percentil 95 | 63.86 |
+| Rango | [17.05, 91.56] |
 
 ### Regresión y Análisis Comparativo
 
@@ -317,7 +354,7 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 | KNN (k=5) | 5.53 | 8.14 | 0.75 |
 | SVR (RBF) | 3.64 | 5.05 | 0.90 |
 | Decision Tree | 0.91 | 2.29 | 0.98 |
-| **Random Forest** | **0.66** | **1.64** | **0.99** |
+| **Random Forest** | **0.66** | **1.64** | **0.9899** |
 
 **Correlación de Pearson: r = 0.9950**
 
@@ -325,26 +362,24 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 
 | Ranking | Variable | Importancia |
 |---|---|---|
-| 1° | **usuarios_concurrentes** | **37.76 %** |
+| 1° | usuarios_concurrentes | 37.76 % |
 | 2° | uso_ancho_banda | 35.38 % |
 | 3° | latencia_red | 23.95 % |
 | 4° | capacidad_servidor | 2.90 % |
-
-> `usuarios_concurrentes` y `uso_ancho_banda` dominan con ~73% combinado. `capacidad_servidor` tiene menor peso en este dataset.
 
 ### Comparación: Caso Base vs Streaming
 
 | Aspecto | Caso Base (Académico) | Proyecto Final (Streaming) |
 |---|---|---|
-| **Variables** | promedio, inasistencia, horas, motivacion | usuarios, banda, latencia, capacidad |
-| **Reglas** | 27 | 27 |
-| **Niveles de salida** | 5 | 5 |
-| **Simulaciones** | 1000 | 5000 |
-| **Mejor R²** | 0.9747 (RF) | **0.9899 (RF)** |
-| **Pearson r** | 0.9877 | **0.9950** |
-| **Variable clave** | inasistencia (50.01%) | usuarios_concurrentes (37.76%) |
-| **P(riesgo ≥ 70)** | 22.4% (entradas uniformes) | 2.9% (distribuciones reales) |
-| **Modelos evaluados** | 4 (KNN, SVR, DT, RF) | 4 (KNN, SVR, DT, RF) |
+| Variables | promedio, inasistencia, horas, motivacion | usuarios, banda, latencia, capacidad |
+| Reglas | 27 | 27 |
+| Niveles de salida | 5 | 5 |
+| Simulaciones | 1000 | 5000 |
+| Mejor R² | 0.9747 (RF) | 0.9899 (RF) |
+| Pearson r | 0.9877 | 0.9950 |
+| Variable más influyente | inasistencia (50.01%) | usuarios_concurrentes (37.76%) |
+| P(riesgo >= 70) | 22.4% (entradas uniformes) | 2.9% (distribuciones reales) |
+| Modelos evaluados | 4 (KNN, SVR, DT, RF) | 4 (KNN, SVR, DT, RF) |
 
 ---
 
@@ -352,10 +387,10 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 
 | Componente | Caso Base (Académico) | Proyecto Final (Streaming) |
 |---|---|---|
-| **Delphi** | 4/4 aprobadas · 100% consenso · CV ≤ 0.102 | 4/4 aprobadas · 100% consenso · CV ≤ 0.102 |
-| **Sistema Difuso** | 27 reglas · 5 niveles · Riesgo muy alto ≈ 82 | 27 reglas · 5 niveles · Riesgo muy alto ≈ 82 |
-| **Montecarlo** | 1000 sims · media=54.26 · P(≥70)=22.4% | 5000 sims · media=36.58 · P(≥70)=2.9% |
-| **Regresión** | RF R²=0.9747 · r=0.9877 · var. clave: inasistencia | RF R²=0.9899 · r=0.9950 · var. clave: usuarios_concurrentes |
+| Delphi | 4/4 aprobadas · 100% consenso · CV <= 0.102 | 4/4 aprobadas · 100% consenso · CV <= 0.102 |
+| Sistema Difuso | 27 reglas · 5 niveles · Riesgo muy alto ~82 | 27 reglas · 5 niveles · Riesgo muy alto ~82 |
+| Montecarlo | 1000 sims · media=54.26 · P(>=70)=22.4% | 5000 sims · media=36.58 · P(>=70)=2.9% |
+| Regresión | RF R²=0.9747 · r=0.9877 · var. clave: inasistencia | RF R²=0.9899 · r=0.9950 · var. clave: usuarios_concurrentes |
 
 ---
 
@@ -363,40 +398,40 @@ El proyecto final aplica la **misma metodología** (Delphi → Difuso → Montec
 
 ```
 Delphi (consenso experto)
-    │
-    ├─► 4 Variables aprobadas (media ≥ 4, CV ≤ 0.30, aprobación ≥ 70%)
-    │
-    ▼
+    |
+    +-> 4 Variables aprobadas (media >= 4, CV <= 0.30, aprobacion >= 70%)
+    |
+    v
 Sistema Difuso Mamdani (27 reglas, 5 niveles de salida)
-    │
-    ├─► evaluar_riesgo(dict) → float ∈ [0, 100]
-    │
-    ▼
-Simulación Montecarlo (distribuciones uniformes, N iteraciones)
-    │
-    ├─► base_simulada.csv
-    │
-    ▼
-Regresión (KNN / SVR / Random Forest / Decision Tree)
-    │
-    └─► R² = 0.97 · Pearson r = 0.99
+    |
+    +-> evaluar_riesgo(dict) -> float en [0, 100]
+    |
+    v
+Simulacion Montecarlo (N iteraciones, RANDOM_SEED = 42)
+    |
+    +-> base_simulada.csv
+    |
+    v
+Regresion (KNN / SVR / Random Forest / Decision Tree)
+    |
+    +-> R² = 0.9747 · Pearson r = 0.9877
 ```
 
-**Principio central:** Ninguna variable, etiqueta, rango ni regla fue inventada. Todo se deriva del consenso del panel de expertos.
+Principio central: ninguna variable, etiqueta, rango ni regla fue definida arbitrariamente. Todo se deriva del consenso del panel de expertos.
 
 ---
 
 ## Conclusiones
 
-1. **El Delphi garantiza respaldo experto real** — las 4 variables tienen media ≥ 4.0, CV ≤ 0.102 y 100% de aprobación en ambos casos.
+1. **El Delphi garantiza respaldo experto real** — las 4 variables tienen media >= 4.0, CV <= 0.102 y 100% de aprobación en ambos casos.
 
 2. **El sistema difuso captura comportamiento no lineal** — 27 reglas con 5 niveles de salida producen una distribución continua y diferenciada del riesgo.
 
-3. **La simulación Montecarlo explora todo el espacio de estados** — con distribuciones uniformes en el caso base, el histograma refleja el comportamiento real del sistema difuso (media=54.26, P(≥70)=22.4%).
+3. **La simulación Montecarlo explora el espacio de estados** — con distribuciones uniformes en el caso base, el histograma refleja el comportamiento real del sistema difuso (media=54.26, P(>=70)=22.4%).
 
-4. **El Random Forest valida la coherencia del sistema difuso** — R²=0.9747 y r=0.9877 en el caso base; R²=0.9899 y r=0.9950 en streaming. Se evaluaron 4 modelos (KNN, SVR, Decision Tree, Random Forest) y Random Forest mostró el mejor desempeño en ambos casos.
+4. **El Random Forest valida la coherencia del sistema difuso** — R²=0.9747 y r=0.9877 en el caso base; R²=0.9899 y r=0.9950 en streaming. Se evaluaron 4 modelos (KNN, SVR, Decision Tree, Random Forest) y Random Forest obtuvo el mejor desempeño en ambos casos.
 
-5. **La metodología es transferible** — el mismo flujo se aplicó exitosamente al caso de streaming (Parte E) con adaptaciones mínimas, obteniendo resultados incluso superiores (R²=0.9899, r=0.9950).
+5. **La metodología es transferible** — el mismo flujo se aplicó al caso de streaming (Parte E) con adaptaciones mínimas, obteniendo resultados superiores (R²=0.9899, r=0.9950).
 
 6. **La trazabilidad es completa** — cada decisión de diseño puede vincularse al consenso Delphi.
 
